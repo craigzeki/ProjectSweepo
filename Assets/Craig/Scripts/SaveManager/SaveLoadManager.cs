@@ -69,8 +69,8 @@ public class SaveLoadManager : MonoBehaviour
     [SerializeField] private GameSaveData gameLoadData = new GameSaveData();
     [EnumNamedArray(typeof(SaveType))] 
     [SerializeField] private GameObject[] saveTypePrefabs = new GameObject[(int)SaveType.NUM_OF_TYPES];
-    [EnumNamedArray(typeof(ObjectType))]
-    [SerializeField] private GameObject[] objectTypePrefabs = new GameObject[(int)ObjectType.NUM_OF_OBJECTS];
+    //[EnumNamedArray(typeof(ObjectType))]
+    //[SerializeField] private GameObject[] objectTypePrefabs = new GameObject[(int)ObjectType.NUM_OF_OBJECTS];
     [SerializeField] private GameObject savingLoadingIcon;
     [SerializeField] private TextMeshProUGUI statusMessage;
     
@@ -78,7 +78,7 @@ public class SaveLoadManager : MonoBehaviour
     private string textToParse;
     private GameSaveData downloadedGameSaveData;
 
-    private string gameSaveDataPath;
+    [SerializeField] private string gameSaveDataPath;
     private JsonBinIo jsonBinIo;
     private bool loadGameRequested = false;
     private bool saveGameRequested = false;
@@ -107,14 +107,12 @@ public class SaveLoadManager : MonoBehaviour
 
         //}
         //clear the save data
-        gameSaveData.playerSaveData.Clear();
-        gameSaveData.nPCSaveData.Clear();
-        gameSaveData.objectSaveData.Clear();
+        gameSaveData.trigQuestionData.Clear();
+
 
         //create [0] position in each gameSaveData table (dummy slot - not used)
-        gameSaveData.playerSaveData.Add(new PlayerSaveData());
-        gameSaveData.nPCSaveData.Add(new NPCSaveData());
-        gameSaveData.objectSaveData.Add(new ObjectSaveData());
+        gameSaveData.trigQuestionData.Add(new TrigQuestionData());
+        
     }
 
     private void Awake()
@@ -124,7 +122,7 @@ public class SaveLoadManager : MonoBehaviour
         InitSaveGameData();
         InitGameloadData();
 
-        jsonBinIo = new JsonBinIo("635297ae2b3499323be62782");
+        jsonBinIo = new JsonBinIo("63ff7210c0e7653a0580bd3d");
     }
 
 
@@ -142,19 +140,39 @@ public class SaveLoadManager : MonoBehaviour
                 //hash position created, now add same position into gameSaveData;
                 switch (saveType)
                 {
-                    case SaveType.PLAYER:
-                        gameSaveData.playerSaveData.Add(new PlayerSaveData());
+                    case SaveType.Q_TRIG:
+                        gameSaveData.trigQuestionData.Add(new TrigQuestionData());
                         break;
-                    case SaveType.NPC:
-                        gameSaveData.nPCSaveData.Add(new NPCSaveData());
+                    case SaveType.Q_GEOMETRY:
                         break;
-                    case SaveType.OBJECT:
-                        gameSaveData.objectSaveData.Add(new ObjectSaveData());
+                    case SaveType.Q_RATIO:
+                        break;
+                    case SaveType.SCORES:
+                        break;
+                    case SaveType.SETTINGS:
                         break;
                     case SaveType.NUM_OF_TYPES:
                     default:
                         break;
                 }
+
+
+                //TODO remove once all are in above
+                //switch (saveType)
+                //{
+                //    case SaveType.Q_T:
+                //        gameSaveData.playerSaveData.Add(new PlayerSaveData());
+                //        break;
+                //    case SaveType.NPC:
+                //        gameSaveData.nPCSaveData.Add(new NPCSaveData());
+                //        break;
+                //    case SaveType.OBJECT:
+                //        gameSaveData.objectSaveData.Add(new ObjectSaveData());
+                //        break;
+                //    case SaveType.NUM_OF_TYPES:
+                //    default:
+                //        break;
+                //}
             }
         }
         else
@@ -180,19 +198,38 @@ public class SaveLoadManager : MonoBehaviour
                 //hash position marked as null, now mark data as invalid;
                 switch (saveType)
                 {
-                    case SaveType.PLAYER:
-                        gameSaveData.playerSaveData[hashIndex].valid = false;
+                    case SaveType.Q_TRIG:
+                        gameSaveData.trigQuestionData[hashIndex].valid = false;
                         break;
-                    case SaveType.NPC:
-                        gameSaveData.nPCSaveData[hashIndex].valid = false;
+                    case SaveType.Q_GEOMETRY:
                         break;
-                    case SaveType.OBJECT:
-                        gameSaveData.objectSaveData[hashIndex].valid = false;
+                    case SaveType.Q_RATIO:
+                        break;
+                    case SaveType.SCORES:
+                        break;
+                    case SaveType.SETTINGS:
                         break;
                     case SaveType.NUM_OF_TYPES:
                     default:
                         break;
                 }
+
+                //TODO remove once all are in above
+                //switch (saveType)
+                //{
+                //    case SaveType.PLAYER:
+                //        gameSaveData.playerSaveData[hashIndex].valid = false;
+                //        break;
+                //    case SaveType.NPC:
+                //        gameSaveData.nPCSaveData[hashIndex].valid = false;
+                //        break;
+                //    case SaveType.OBJECT:
+                //        gameSaveData.objectSaveData[hashIndex].valid = false;
+                //        break;
+                //    case SaveType.NUM_OF_TYPES:
+                //    default:
+                //        break;
+                //}
             }
 
         }
@@ -222,9 +259,9 @@ public class SaveLoadManager : MonoBehaviour
 
     private void InitGameloadData()
     {
-        gameLoadData.playerSaveData.Clear();
-        gameLoadData.nPCSaveData.Clear();
-        gameLoadData.objectSaveData.Clear();
+        gameLoadData.trigQuestionData.Clear();
+
+        
         
     }
 
@@ -232,27 +269,46 @@ public class SaveLoadManager : MonoBehaviour
     {
         //TODO GameManager.Instance.SaveGlobalData(ref gameSaveData.globalSaveData);
         //collect all saveable data from gameobjects
-        for (int saveType = 0; saveType < (int)SaveType.NUM_OF_TYPES; saveType++)
+        for (SaveType saveType = 0; saveType < SaveType.NUM_OF_TYPES; saveType++)
         {
-            foreach (SaveableObject saveable in hashTables[(SaveType)saveType].objectHash.Values)
+            foreach (SaveableObject saveable in hashTables[saveType].objectHash.Values)
             {
                 if (saveable == null) continue; //in case saveable has been destroyed
 
-                switch ((SaveType)saveType)
+                switch (saveType)
                 {
-                    case SaveType.PLAYER:
-                        saveable.TrySaveData(ref gameSaveData.playerSaveData);
+                    case SaveType.Q_TRIG:
+                        saveable.TrySaveData(ref gameSaveData.trigQuestionData);
                         break;
-                    case SaveType.NPC:
-                        saveable.TrySaveData(ref gameSaveData.nPCSaveData);
+                    case SaveType.Q_GEOMETRY:
                         break;
-                    case SaveType.OBJECT:
-                        saveable.TrySaveData(ref gameSaveData.objectSaveData);
+                    case SaveType.Q_RATIO:
+                        break;
+                    case SaveType.SCORES:
+                        break;
+                    case SaveType.SETTINGS:
                         break;
                     case SaveType.NUM_OF_TYPES:
                     default:
                         break;
                 }
+
+                //todo remove once all are complete above
+                //switch ((SaveType)saveType)
+                //{
+                //    case SaveType.PLAYER:
+                //        saveable.TrySaveData(ref gameSaveData.playerSaveData);
+                //        break;
+                //    case SaveType.NPC:
+                //        saveable.TrySaveData(ref gameSaveData.nPCSaveData);
+                //        break;
+                //    case SaveType.OBJECT:
+                //        saveable.TrySaveData(ref gameSaveData.objectSaveData);
+                //        break;
+                //    case SaveType.NUM_OF_TYPES:
+                //    default:
+                //        break;
+                //}
 
             }
         }
@@ -262,6 +318,7 @@ public class SaveLoadManager : MonoBehaviour
 
     public void SaveGameToLocal()
     {
+        if (gameSaveDataPath == "") return;
         System.IO.File.WriteAllText(gameSaveDataPath, SaveGamePrepareJsonString());
     }
 
@@ -370,8 +427,11 @@ public class SaveLoadManager : MonoBehaviour
         }
 
         //show hide the saving icon
+        if (savingLoadingIcon == null) return;
         savingLoadingIcon.SetActive(loadGameRequested || saveGameRequested);
-        if(loadGameRequested)
+
+        if (statusMessage == null) return;
+        if (loadGameRequested)
         {
             statusMessage.text = "Loading...";
         }
@@ -396,37 +456,61 @@ public class SaveLoadManager : MonoBehaviour
         }
 
         //spawn all objects
-        for (int saveType = 0; saveType < (int)SaveType.NUM_OF_TYPES; saveType++)
+        for (SaveType saveType = 0; saveType < SaveType.NUM_OF_TYPES; saveType++)
         {
-
-            switch ((SaveType)saveType)
+            switch (saveType)
             {
-                case SaveType.PLAYER:
-                    for (int i = 1; i < gameLoadData.playerSaveData.Count; i++) //0 slot is reserved to identify errors
+                case SaveType.Q_TRIG:
+                    for (int i = 1; i < gameLoadData.trigQuestionData.Count; i++)
                     {
-                        if (gameLoadData.playerSaveData[i].valid == false) continue; //an object was destroyed in previous game - do not load now - this will clean up the next save file
+                        if (gameLoadData.trigQuestionData[i].valid == false) continue;
                         GameObject go;
-                        go = Instantiate(saveTypePrefabs[saveType]);
-                        go.GetComponent<SaveableObject>().TryLoadData(gameLoadData.playerSaveData, i);
+                        go = Instantiate(saveTypePrefabs[(int)saveType]);
+                        go.GetComponent<SaveableObject>().TryLoadData(gameLoadData.trigQuestionData, i);
                     }
                     break;
-                case SaveType.NPC:
-                     
+                case SaveType.Q_GEOMETRY:
                     break;
-                case SaveType.OBJECT:
-                    for(int i = 1; i < gameLoadData.objectSaveData.Count; i++) //0 slot is reserved to identify errors
-                    {
-                        if (gameLoadData.objectSaveData[i].objectType >= ObjectType.NUM_OF_OBJECTS) continue; //not a valid object to load
-                        if (gameLoadData.objectSaveData[i].valid == false) continue; //an object was destroyed in previous game - do not load now - this will clean up the next save file
-                        GameObject go;
-                        go = Instantiate(objectTypePrefabs[(int)gameLoadData.objectSaveData[i].objectType]);
-                        go.GetComponent <SaveableObject>().TryLoadData(gameLoadData.objectSaveData, i);
-                    }
+                case SaveType.Q_RATIO:
+                    break;
+                case SaveType.SCORES:
+                    break;
+                case SaveType.SETTINGS:
                     break;
                 case SaveType.NUM_OF_TYPES:
                 default:
                     break;
             }
+
+            //todo remove below once all above are complete
+            //switch ((SaveType)saveType)
+            //{
+            //    case SaveType.PLAYER:
+            //        for (int i = 1; i < gameLoadData.playerSaveData.Count; i++) //0 slot is reserved to identify errors
+            //        {
+            //            if (gameLoadData.playerSaveData[i].valid == false) continue; //an object was destroyed in previous game - do not load now - this will clean up the next save file
+            //            GameObject go;
+            //            go = Instantiate(saveTypePrefabs[saveType]);
+            //            go.GetComponent<SaveableObject>().TryLoadData(gameLoadData.playerSaveData, i);
+            //        }
+            //        break;
+            //    case SaveType.NPC:
+                     
+            //        break;
+            //    case SaveType.OBJECT:
+            //        for(int i = 1; i < gameLoadData.objectSaveData.Count; i++) //0 slot is reserved to identify errors
+            //        {
+            //            if (gameLoadData.objectSaveData[i].objectType >= ObjectType.NUM_OF_OBJECTS) continue; //not a valid object to load
+            //            if (gameLoadData.objectSaveData[i].valid == false) continue; //an object was destroyed in previous game - do not load now - this will clean up the next save file
+            //            GameObject go;
+            //            go = Instantiate(objectTypePrefabs[(int)gameLoadData.objectSaveData[i].objectType]);
+            //            go.GetComponent <SaveableObject>().TryLoadData(gameLoadData.objectSaveData, i);
+            //        }
+            //        break;
+            //    case SaveType.NUM_OF_TYPES:
+            //    default:
+            //        break;
+            //}
 
         }
 
@@ -438,15 +522,15 @@ public class SaveLoadManager : MonoBehaviour
         InitSaveGameData();
         InitGameloadData();
     }
-    public void LoadGameFromLocal()
+    public bool LoadGameFromLocal()
     {
         string jsonData;
+        //load from file
+        if (!System.IO.File.Exists(gameSaveDataPath)) return false;
 
         LoadGamePrepareScene();
-
-        //load from file
-        if (!System.IO.File.Exists(gameSaveDataPath)) return;
         jsonData = System.IO.File.ReadAllText(gameSaveDataPath);
         LoadGameFromJson(jsonData);
+        return true;
     }
 }
