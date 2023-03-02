@@ -53,7 +53,7 @@ public class SaveableObject : MonoBehaviour
         playerSaveData[myHashIndex].position = transform.position;
         playerSaveData[myHashIndex].scale = transform.localScale;
         playerSaveData[myHashIndex].rotation = transform.rotation.eulerAngles;
-        playerSaveData[myHashIndex].nosePosition = gameObject.GetComponent<PlayerMovement>().nose.position;
+        //TODO playerSaveData[myHashIndex].nosePosition = gameObject.GetComponent<PlayerMovement>().nose.position;
         playerSaveData[myHashIndex].objectType = objectType;
         playerSaveData[myHashIndex].valid = true;
         return true;
@@ -93,7 +93,7 @@ public class SaveableObject : MonoBehaviour
         transform.position = playerSaveData[index].position;
         transform.eulerAngles = playerSaveData[index].rotation;
         transform.localScale = playerSaveData[index].scale;
-        gameObject.GetComponent<PlayerMovement>().nose.position = playerSaveData[index].nosePosition;
+        //TODO gameObject.GetComponent<PlayerMovement>().nose.position = playerSaveData[index].nosePosition;
         objectType = playerSaveData[index].objectType;
         return true;
     }

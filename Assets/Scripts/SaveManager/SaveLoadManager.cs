@@ -230,7 +230,7 @@ public class SaveLoadManager : MonoBehaviour
 
     private string SaveGamePrepareJsonString()
     {
-        GameManager.Instance.SaveGlobalData(ref gameSaveData.globalSaveData);
+        //TODO GameManager.Instance.SaveGlobalData(ref gameSaveData.globalSaveData);
         //collect all saveable data from gameobjects
         for (int saveType = 0; saveType < (int)SaveType.NUM_OF_TYPES; saveType++)
         {
@@ -430,7 +430,7 @@ public class SaveLoadManager : MonoBehaviour
 
         }
 
-        GameManager.Instance.LoadGlobalData(gameLoadData.globalSaveData);
+        //TODO GameManager.Instance.LoadGlobalData(gameLoadData.globalSaveData);
     }
     private void LoadGamePrepareScene()
     {
