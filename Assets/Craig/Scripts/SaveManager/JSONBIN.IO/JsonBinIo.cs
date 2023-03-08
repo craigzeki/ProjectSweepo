@@ -83,7 +83,7 @@ public class JsonBinIo
 
             if((method == HttpMethod.Put) || (method == HttpMethod.Post))
             {
-                //also sets the Content-Type header?
+                //also sets the Content-Type header
                 request.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json" );
             }
             var response = await client.SendAsync(request);

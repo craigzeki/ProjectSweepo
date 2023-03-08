@@ -15,6 +15,7 @@ public abstract class QuestionManager : MonoBehaviour
 
     protected GameObject GetRandomQuestion()
     {
+        if (_questions.Count == 0) return null;
         currentQuestion = Random.Range((int)0, _questions.Count);
         return _questions[currentQuestion];
     }

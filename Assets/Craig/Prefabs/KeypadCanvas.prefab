@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7895958200431917442}
   - component: {fileID: 6888619469039014651}
   - component: {fileID: 1229790993679740013}
+  - component: {fileID: 9217323852358764218}
   m_Layer: 0
   m_Name: Toggle (2)
   m_TagString: Untagged
@@ -88,7 +89,19 @@ MonoBehaviour:
   m_Group: {fileID: 6524816346339971452}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TrigQuestionManager, Assembly-CSharp
+        m_MethodName: SetSelectedAnswer
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8356365466011279424}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &7895958200431917442
 CanvasRenderer:
@@ -154,6 +167,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &9217323852358764218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93321516638706595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45855e9b70e8a314c9200c023f5a2115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answer: 0
+  _buttonText: {fileID: 176398300173662090}
+  _textFormat: F0
+  _textPrepend: 
+  _textPostpend: "\xB0"
 --- !u!1 &147689651296135448
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +197,7 @@ GameObject:
   - component: {fileID: 2422196231654957489}
   - component: {fileID: 2463035838353538530}
   - component: {fileID: 6718598532835748667}
+  - component: {fileID: 5970165764213846108}
   m_Layer: 0
   m_Name: Toggle (6)
   m_TagString: Untagged
@@ -242,7 +273,19 @@ MonoBehaviour:
   m_Group: {fileID: 6524816346339971452}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TrigQuestionManager, Assembly-CSharp
+        m_MethodName: SetSelectedAnswer
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 7227519907021824951}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &2422196231654957489
 CanvasRenderer:
@@ -308,6 +351,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5970165764213846108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147689651296135448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45855e9b70e8a314c9200c023f5a2115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answer: 0
+  _buttonText: {fileID: 3985135838849656061}
+  _textFormat: F0
+  _textPrepend: 
+  _textPostpend: "\xB0"
 --- !u!1 &291843637200384706
 GameObject:
   m_ObjectHideFlags: 0
@@ -650,6 +710,7 @@ GameObject:
   - component: {fileID: 6483247959671147310}
   - component: {fileID: 236086521919187350}
   - component: {fileID: 5356311655767815053}
+  - component: {fileID: 5333764100302134604}
   m_Layer: 0
   m_Name: Toggle (1)
   m_TagString: Untagged
@@ -725,7 +786,19 @@ MonoBehaviour:
   m_Group: {fileID: 6524816346339971452}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TrigQuestionManager, Assembly-CSharp
+        m_MethodName: SetSelectedAnswer
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 120787325454936150}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &6483247959671147310
 CanvasRenderer:
@@ -791,6 +864,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5333764100302134604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288982153105564897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45855e9b70e8a314c9200c023f5a2115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answer: 0
+  _buttonText: {fileID: 1686700567843443140}
+  _textFormat: F0
+  _textPrepend: 
+  _textPostpend: "\xB0"
 --- !u!1 &1481480829072034767
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,6 +894,7 @@ GameObject:
   - component: {fileID: 6197524818388945348}
   - component: {fileID: 771178981100276167}
   - component: {fileID: 5494675817044136302}
+  - component: {fileID: 8986670084461901934}
   m_Layer: 0
   m_Name: Toggle (4)
   m_TagString: Untagged
@@ -879,7 +970,19 @@ MonoBehaviour:
   m_Group: {fileID: 6524816346339971452}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TrigQuestionManager, Assembly-CSharp
+        m_MethodName: SetSelectedAnswer
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2676603815946923557}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &6197524818388945348
 CanvasRenderer:
@@ -945,6 +1048,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8986670084461901934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481480829072034767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45855e9b70e8a314c9200c023f5a2115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answer: 0
+  _buttonText: {fileID: 1287508943717113631}
+  _textFormat: F0
+  _textPrepend: 
+  _textPostpend: "\xB0"
 --- !u!1 &2290361736085283366
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,6 +1078,7 @@ GameObject:
   - component: {fileID: 6294536630697067770}
   - component: {fileID: 9107733218971497265}
   - component: {fileID: 2015097687876604667}
+  - component: {fileID: 3440800344273048103}
   m_Layer: 0
   m_Name: Toggle (3)
   m_TagString: Untagged
@@ -1033,7 +1154,19 @@ MonoBehaviour:
   m_Group: {fileID: 6524816346339971452}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TrigQuestionManager, Assembly-CSharp
+        m_MethodName: SetSelectedAnswer
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3358941805418467233}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &6294536630697067770
 CanvasRenderer:
@@ -1099,6 +1232,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &3440800344273048103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2290361736085283366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45855e9b70e8a314c9200c023f5a2115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answer: 0
+  _buttonText: {fileID: 7268885399442429671}
+  _textFormat: F0
+  _textPrepend: 
+  _textPostpend: "\xB0"
 --- !u!1 &2700062138101473563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,6 +1801,7 @@ GameObject:
   - component: {fileID: 1564982622805926212}
   - component: {fileID: 1478319716866512850}
   - component: {fileID: 2174898784814257131}
+  - component: {fileID: 7205289231767691975}
   m_Layer: 0
   m_Name: Toggle (7)
   m_TagString: Untagged
@@ -1726,7 +1877,19 @@ MonoBehaviour:
   m_Group: {fileID: 6524816346339971452}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TrigQuestionManager, Assembly-CSharp
+        m_MethodName: SetSelectedAnswer
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 454397235782232707}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &1564982622805926212
 CanvasRenderer:
@@ -1792,6 +1955,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &7205289231767691975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4094372241586216134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45855e9b70e8a314c9200c023f5a2115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answer: 0
+  _buttonText: {fileID: 5268514516205088535}
+  _textFormat: F0
+  _textPrepend: 
+  _textPostpend: "\xB0"
 --- !u!1 &4213428120227804144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1805,6 +1985,7 @@ GameObject:
   - component: {fileID: 3500565449034754081}
   - component: {fileID: 4336704035168352808}
   - component: {fileID: 5493170834847807875}
+  - component: {fileID: 4609657016127834512}
   m_Layer: 0
   m_Name: Toggle (5)
   m_TagString: Untagged
@@ -1880,7 +2061,19 @@ MonoBehaviour:
   m_Group: {fileID: 6524816346339971452}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TrigQuestionManager, Assembly-CSharp
+        m_MethodName: SetSelectedAnswer
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 7300308888249092459}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &3500565449034754081
 CanvasRenderer:
@@ -1946,6 +2139,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4609657016127834512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4213428120227804144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45855e9b70e8a314c9200c023f5a2115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answer: 0
+  _buttonText: {fileID: 8317218668736270435}
+  _textFormat: F0
+  _textPrepend: 
+  _textPostpend: "\xB0"
 --- !u!1 &4629961499682325065
 GameObject:
   m_ObjectHideFlags: 0
@@ -2259,14 +2469,26 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2720438592281959669}
   toggleTransition: 1
   graphic: {fileID: 5639683930808429646}
   m_Group: {fileID: 3876232527042512499}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TrigQuestionManager, Assembly-CSharp
+        m_MethodName: CheckAnswer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &2163079185246327581
 CanvasRenderer:
@@ -2345,6 +2567,7 @@ GameObject:
   - component: {fileID: 7638170286130292331}
   - component: {fileID: 1688526450688857715}
   - component: {fileID: 4330699797610765139}
+  - component: {fileID: 616068221197956342}
   m_Layer: 0
   m_Name: Toggle
   m_TagString: Untagged
@@ -2420,7 +2643,19 @@ MonoBehaviour:
   m_Group: {fileID: 6524816346339971452}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TrigQuestionManager, Assembly-CSharp
+        m_MethodName: SetSelectedAnswer
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 5722619462588533384}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &7638170286130292331
 CanvasRenderer:
@@ -2486,6 +2721,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &616068221197956342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4845537103486295436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45855e9b70e8a314c9200c023f5a2115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answer: 0
+  _buttonText: {fileID: 5952704009494501632}
+  _textFormat: F0
+  _textPrepend: 
+  _textPostpend: "\xB0"
 --- !u!1 &4934900714645415798
 GameObject:
   m_ObjectHideFlags: 0
@@ -3218,6 +3470,7 @@ GameObject:
   - component: {fileID: 6142257621352380289}
   - component: {fileID: 4185274628974215800}
   - component: {fileID: 253723729833332589}
+  - component: {fileID: 828164023963697961}
   m_Layer: 0
   m_Name: Toggle (8)
   m_TagString: Untagged
@@ -3293,7 +3546,19 @@ MonoBehaviour:
   m_Group: {fileID: 6524816346339971452}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TrigQuestionManager, Assembly-CSharp
+        m_MethodName: SetSelectedAnswer
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3638891439409134161}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &6142257621352380289
 CanvasRenderer:
@@ -3359,6 +3624,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &828164023963697961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6625621066591489925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45855e9b70e8a314c9200c023f5a2115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answer: 0
+  _buttonText: {fileID: 2857347748042165856}
+  _textFormat: F0
+  _textPrepend: 
+  _textPostpend: "\xB0"
 --- !u!1 &6699859363656168252
 GameObject:
   m_ObjectHideFlags: 0
@@ -4874,6 +5156,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicPokeCanvasNoOpAudio
       objectReference: {fileID: 0}
+    - target: {fileID: 7410389675181900697, guid: a9f06a12402a7514ab2b24bf280292cf, type: 3}
+      propertyPath: _pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7410389675181900697, guid: a9f06a12402a7514ab2b24bf280292cf, type: 3}
+      propertyPath: _volume
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 7410389675181900697, guid: a9f06a12402a7514ab2b24bf280292cf, type: 3}
+      propertyPath: _audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c74912de48d81f9488f1b6cb51c98e66, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9f06a12402a7514ab2b24bf280292cf, type: 3}
 --- !u!114 &5809216728192765481 stripped
@@ -4947,6 +5241,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicPokeCanvasPressAudio
       objectReference: {fileID: 0}
+    - target: {fileID: 7410389675181900697, guid: 13a74428dd920fd4797387cc4bb18321, type: 3}
+      propertyPath: _volume
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 7410389675181900697, guid: 13a74428dd920fd4797387cc4bb18321, type: 3}
+      propertyPath: _audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 731e56fc7ff94f94fb3884750e017645, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13a74428dd920fd4797387cc4bb18321, type: 3}
 --- !u!4 &1026182963675669040 stripped
