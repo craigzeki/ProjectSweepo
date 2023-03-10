@@ -30,32 +30,65 @@ public class SaveableObject : MonoBehaviour
         }
     }
 
-    public bool TrySaveData(ref List<TrigQuestionData> trigQuestions)
+    public bool TrySaveData(ref List<TrigQuestionData> questions)
     {
         if (!registeredAsSaveable) return false;
         if (saveType != SaveType.Q_TRIG) return false;
-        if ((myHashIndex == 0) || (myHashIndex > trigQuestions.Count)) return false;
+        if ((myHashIndex == 0) || (myHashIndex > questions.Count)) return false;
 
-        trigQuestions[myHashIndex].id = GetComponent<TrigQuestion>().trigQuestionData.id;
-        trigQuestions[myHashIndex].a = GetComponent<TrigQuestion>().trigQuestionData.a;
-        trigQuestions[myHashIndex].b = GetComponent<TrigQuestion>().trigQuestionData.b;
+        questions[myHashIndex].id = GetComponent<TrigQuestion>().trigQuestionData.id;
+        questions[myHashIndex].a = GetComponent<TrigQuestion>().trigQuestionData.a;
+        questions[myHashIndex].b = GetComponent<TrigQuestion>().trigQuestionData.b;
         return true;
     }
 
-    public bool TryLoadData(List<TrigQuestionData> trigQuestionData, int index)
+    public bool TryLoadData(List<TrigQuestionData> questionData, int index)
     {
-        if (trigQuestionData.Count <= index) return false;
-        if (!trigQuestionData[index].valid) return false;
+        if (questionData.Count <= index) return false;
+        if (!questionData[index].valid) return false;
         if (saveType != SaveType.Q_TRIG) return false;
 
-        GetComponent<TrigQuestion>().trigQuestionData.a = trigQuestionData[index].a;
-        GetComponent<TrigQuestion>().trigQuestionData.b = trigQuestionData[index].b;
-        GetComponent<TrigQuestion>().trigQuestionData.id = trigQuestionData[index].id;
+        GetComponent<TrigQuestion>().trigQuestionData.a = questionData[index].a;
+        GetComponent<TrigQuestion>().trigQuestionData.b = questionData[index].b;
+        GetComponent<TrigQuestion>().trigQuestionData.id = questionData[index].id;
 
         TrigQuestionManager.Instance.AddLoadedQuestionToList(this);
 
         return true;
     }
+
+    //Section for Ratio Questions
+    #region RatioQuestions
+
+    public bool TrySaveData(ref List<RatioQuestionData> questions)
+    {
+        if (!registeredAsSaveable) return false;
+        if (saveType != SaveType.Q_TRIG) return false;
+        if ((myHashIndex == 0) || (myHashIndex > questions.Count)) return false;
+
+        questions[myHashIndex].id = GetComponent<RatioQuestion>().ratioQuestionData.id;
+        questions[myHashIndex].blueplant = GetComponent<RatioQuestion>().ratioQuestionData.blueplant;
+        questions[myHashIndex].redplant = GetComponent<RatioQuestion>().ratioQuestionData.redplant;
+        questions[myHashIndex].yellowplant = GetComponent<RatioQuestion>().ratioQuestionData.yellowplant;
+        return true;
+    }
+
+    public bool TryLoadData(List<RatioQuestionData> questionData, int index)
+    {
+        if (questionData.Count <= index) return false;
+        if (!questionData[index].valid) return false;
+        if (saveType != SaveType.Q_TRIG) return false;
+
+        GetComponent<RatioQuestion>().ratioQuestionData.redplant = questionData[index].redplant;
+        GetComponent<RatioQuestion>().ratioQuestionData.blueplant = questionData[index].blueplant;
+        GetComponent<RatioQuestion>().ratioQuestionData.yellowplant = questionData[index].yellowplant;
+        GetComponent<RatioQuestion>().ratioQuestionData.id = questionData[index].id;
+
+        TrigQuestionManager.Instance.AddLoadedQuestionToList(this);
+
+        return true;
+    }
+    #endregion
 
     //public bool TrySaveData(ref List<PlayerSaveData> playerSaveData)
     //{
