@@ -37,7 +37,16 @@ public class ContainerManager : MonoBehaviour
             timeElapsed += Time.deltaTime;
             yield return null;
         }
-        lerpPos.z = endValue;
+
+        if(isOpening)
+        {
+            lerpPos.z = endValue;
+        }
+        else
+        {
+            lerpPos.z = startValue;
+        }
+        
     }
 
     // Update is called once per frame
