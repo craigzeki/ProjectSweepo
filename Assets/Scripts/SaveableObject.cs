@@ -84,7 +84,7 @@ public class SaveableObject : MonoBehaviour
         GetComponent<RatioQuestion>().ratioQuestionData.yellowplant = questionData[index].yellowplant;
         GetComponent<RatioQuestion>().ratioQuestionData.id = questionData[index].id;
 
-        TrigQuestionManager.Instance.AddLoadedQuestionToList(this);
+        RatioQuestionManager.Instance.AddLoadedQuestionToList(this);
 
         return true;
     }

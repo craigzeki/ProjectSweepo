@@ -8,6 +8,9 @@ public enum SaveType : int
     Q_TRIG = 0,
     Q_GEOMETRY,
     Q_RATIO,
+    //TRIG_SETTINGS,
+    //GEOMETRY_SETTINGS,
+    //RATIO_SETTINGS,
     SCORES,
     SETTINGS,
     NUM_OF_TYPES
@@ -26,7 +29,8 @@ public enum SaveType : int
 [Serializable]
 public class GameSaveData
 {
-    public List<TrigQuestionData> trigQuestionData = new List<TrigQuestionData>();
+    public TrigSettingsData TrigSettingsData = new TrigSettingsData();
+    public List<TrigQuestionData> TrigQuestionData = new List<TrigQuestionData>();
     //todo remove below once finished using as exmaple
     //public GlobalSaveData globalSaveData = new GlobalSaveData();
     //public List<PlayerSaveData> playerSaveData = new List<PlayerSaveData>();

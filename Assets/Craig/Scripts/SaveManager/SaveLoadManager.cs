@@ -107,11 +107,11 @@ public class SaveLoadManager : MonoBehaviour
 
         //}
         //clear the save data
-        gameSaveData.trigQuestionData.Clear();
+        gameSaveData.TrigQuestionData.Clear();
 
 
         //create [0] position in each gameSaveData table (dummy slot - not used)
-        gameSaveData.trigQuestionData.Add(new TrigQuestionData());
+        gameSaveData.TrigQuestionData.Add(new TrigQuestionData());
         
     }
 
@@ -141,7 +141,7 @@ public class SaveLoadManager : MonoBehaviour
                 switch (saveType)
                 {
                     case SaveType.Q_TRIG:
-                        gameSaveData.trigQuestionData.Add(new TrigQuestionData());
+                        gameSaveData.TrigQuestionData.Add(new TrigQuestionData());
                         break;
                     case SaveType.Q_GEOMETRY:
                         break;
@@ -199,7 +199,7 @@ public class SaveLoadManager : MonoBehaviour
                 switch (saveType)
                 {
                     case SaveType.Q_TRIG:
-                        gameSaveData.trigQuestionData[hashIndex].valid = false;
+                        gameSaveData.TrigQuestionData[hashIndex].valid = false;
                         break;
                     case SaveType.Q_GEOMETRY:
                         break;
@@ -259,7 +259,7 @@ public class SaveLoadManager : MonoBehaviour
 
     private void InitGameloadData()
     {
-        gameLoadData.trigQuestionData.Clear();
+        gameLoadData.TrigQuestionData.Clear();
 
         
         
@@ -268,6 +268,7 @@ public class SaveLoadManager : MonoBehaviour
     private string SaveGamePrepareJsonString()
     {
         //TODO GameManager.Instance.SaveGlobalData(ref gameSaveData.globalSaveData);
+        TrigQuestionManager.Instance.SaveTrigSettings(ref gameSaveData.TrigSettingsData);
         //collect all saveable data from gameobjects
         for (SaveType saveType = 0; saveType < SaveType.NUM_OF_TYPES; saveType++)
         {
@@ -278,7 +279,7 @@ public class SaveLoadManager : MonoBehaviour
                 switch (saveType)
                 {
                     case SaveType.Q_TRIG:
-                        saveable.TrySaveData(ref gameSaveData.trigQuestionData);
+                        saveable.TrySaveData(ref gameSaveData.TrigQuestionData);
                         break;
                     case SaveType.Q_GEOMETRY:
                         break;
@@ -461,12 +462,12 @@ public class SaveLoadManager : MonoBehaviour
             switch (saveType)
             {
                 case SaveType.Q_TRIG:
-                    for (int i = 1; i < gameLoadData.trigQuestionData.Count; i++)
+                    for (int i = 1; i < gameLoadData.TrigQuestionData.Count; i++)
                     {
-                        if (gameLoadData.trigQuestionData[i].valid == false) continue;
+                        if (gameLoadData.TrigQuestionData[i].valid == false) continue;
                         GameObject go;
                         go = Instantiate(saveTypePrefabs[(int)saveType]);
-                        go.GetComponent<SaveableObject>().TryLoadData(gameLoadData.trigQuestionData, i);
+                        go.GetComponent<SaveableObject>().TryLoadData(gameLoadData.TrigQuestionData, i);
                     }
                     break;
                 case SaveType.Q_GEOMETRY:
@@ -513,7 +514,7 @@ public class SaveLoadManager : MonoBehaviour
             //}
 
         }
-
+        TrigQuestionManager.Instance.LoadTrigSettings(gameLoadData.TrigSettingsData);
         //TODO GameManager.Instance.LoadGlobalData(gameLoadData.globalSaveData);
     }
     private void LoadGamePrepareScene()
