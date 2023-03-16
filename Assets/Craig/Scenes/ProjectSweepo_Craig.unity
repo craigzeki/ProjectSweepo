@@ -10344,6 +10344,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4837895800271798, guid: 103cc39f51141714b8910daa066c1d84, type: 3}
   m_PrefabInstance: {fileID: 518139962}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &527621321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 527621322}
+  m_Layer: 0
+  m_Name: TrigAsteroidSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &527621322
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527621321}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 127.10369, y: 17.696686, z: -4.8539357}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &527939115
 GameObject:
   m_ObjectHideFlags: 0
@@ -16356,6 +16387,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1852ce2a8e3023f43bd46803526138f4, type: 3}
+--- !u!1 &829906503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 829906504}
+  m_Layer: 0
+  m_Name: TrigMissedTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &829906504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829906503}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 205.2, y: 46.3, z: 15.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &830728647
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21970,6 +22032,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 157316245, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: _tweenSpeed
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 157316245, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: _missilePrefab
+      value: 
+      objectReference: {fileID: 7280748727341701331, guid: 1ae76c3010888d544ae40da7ae7656a8, type: 3}
+    - target: {fileID: 157316245, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: _missileSpawnPoint
+      value: 
+      objectReference: {fileID: 2064951924}
+    - target: {fileID: 157316245, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: _targetMissedPoint
+      value: 
+      objectReference: {fileID: 829906504}
+    - target: {fileID: 157316245, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: _targetAsteroidPrefab
+      value: 
+      objectReference: {fileID: 4440387905551951392, guid: d541332b302a4c1448a44a5ab66af4e6, type: 3}
+    - target: {fileID: 157316245, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: _targetAsteroidSpawnPoint
+      value: 
+      objectReference: {fileID: 527621322}
     - target: {fileID: 19889166070301491, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -22125,6 +22211,30 @@ PrefabInstance:
     - target: {fileID: 1061886647308589158, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
       propertyPath: m_Name
       value: TrigQuestionPanel_HUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407146441472446551, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407146441472446551, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407146441472446551, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407146441472446551, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407146441472446551, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407146441472446551, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1451420707920372094, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
       propertyPath: m_AnchorMax.y
@@ -22955,6 +23065,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6778175675613281963, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817350088631331183, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817350088631331183, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817350088631331183, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817350088631331183, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817350088631331183, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6817350088631331183, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -42380,6 +42514,37 @@ Transform:
   m_Father: {fileID: 2109415765}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2064951923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2064951924}
+  m_Layer: 0
+  m_Name: TrigMissileSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2064951924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064951923}
+  m_LocalRotation: {x: -0.33990276, y: -0.8205979, z: -0.17582014, w: -0.42446738}
+  m_LocalPosition: {x: 28.958, y: -0.49, z: 34.174}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: -234.702, z: 45}
 --- !u!1001 &2073942564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43934,18 +44099,6 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4658284992386185773, guid: 00528728742953c4382e22fe00dd7488, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4658284992386185773, guid: 00528728742953c4382e22fe00dd7488, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4658284992386185773, guid: 00528728742953c4382e22fe00dd7488, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4658284992386185773, guid: 00528728742953c4382e22fe00dd7488, type: 3}
       propertyPath: m_LocalPosition.x
       value: 28.958
       objectReference: {fileID: 0}
@@ -43988,6 +44141,10 @@ PrefabInstance:
     - target: {fileID: 4661356406407661369, guid: 00528728742953c4382e22fe00dd7488, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Missile_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661356406407661369, guid: 00528728742953c4382e22fe00dd7488, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00528728742953c4382e22fe00dd7488, type: 3}

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using Unity.VisualScripting;
 using System.Linq;
+using JetBrains.Annotations;
 
 public class TrigQuestionManager : QuestionManager
 {
@@ -31,20 +32,43 @@ public class TrigQuestionManager : QuestionManager
     [SerializeField] private TextMeshProUGUI _fireButtonText;
     [SerializeField] private Color _fireButtonTextEnabledColor;
     [SerializeField] private Color _fireButtonTextDisabledColor;
-    [SerializeField] private List<Transform> _targetAsteroidSpawnPoints = new List<Transform>();
+    [SerializeField] private GameObject _targetAsteroidPrefab;
+    [SerializeField] private Transform _targetAsteroidSpawnPoint;
+    [SerializeField] private Transform _targetMissedPoint;
     [SerializeField] private GameObject _missilePrefab;
     [SerializeField] private Transform _missileSpawnPoint;
     [SerializeField] private GameObject _welcomeHUDCanvas;
     [SerializeField] private GameObject _questionHUDCanvas;
     [SerializeField] private GameObject _firingHUDCanvas;
+    [SerializeField] private GameObject _firingCompleteHUDCanvas;
     [SerializeField] private GameObject _welcomeInputCanvas;
     [SerializeField] private GameObject _answerInputCanvas;
     [SerializeField] private GameObject _firingInputCanvas;
+    [SerializeField] private GameObject _firingCompleteInputCanvas;
     [SerializeField] private GameObject _inputSurface;
+    [SerializeField] private Toggle _startButton;
+    [SerializeField] private Toggle _retryButton;
     [SerializeField] private TextMeshProUGUI _questionNumberText;
+    [SerializeField] private TextMeshProUGUI _questionNumberWelcomeText;
+    [SerializeField] private string _questionWelcomePreText = "You will need to answer all ";
+    [SerializeField] private string _questionWelcomePostText = " question(s) correctly";
+    [SerializeField] private float _firingSequencePause = 0.4f;
+    [SerializeField] private float _blinkTextPeriod = 0.6f;
+    [SerializeField] private List<TextMeshProUGUI> _firingSequenceTextFields = new List<TextMeshProUGUI>();
+    [SerializeField] private TextMeshProUGUI _firingSequenceQCorrectText;
+    [SerializeField] private TextMeshProUGUI _firingSequenceMissileText;
+    [SerializeField] private string _firingSequenceQCorrectPreText = "";
+    [SerializeField] private string _firingSequenceQCorrectMidText = " of ";
+    [SerializeField] private string _firingSequenceQCorrectPostText = " questions correct!";
+    [SerializeField] private TextMeshProUGUI _firingCompleteText;
+    [SerializeField] private string _firingCompleteAllCorrect = "Target Destroyed!";
+    [SerializeField] private string _firingCompleteIncorrect = "Target Missed!";
+    [SerializeField] private Color _firingCompleteAllCorrectColor = Color.green;
+    [SerializeField] private Color _firingCompleteIncorrectColor = Color.red;
     [SerializeField] private Vector3 _hudCanvasFullScale = Vector3.one;
     [SerializeField] private Vector3 _inputCanvasFullScale = Vector3.one;
     [SerializeField] private Vector3 _hudCanvasMinScaleThreshold = Vector3.zero;
+    [SerializeField] private float _tweenSpeed = 1.75f;
     
 
     private static TrigQuestionManager instance;
@@ -61,8 +85,13 @@ public class TrigQuestionManager : QuestionManager
     private QM_State _nextState = QM_State.WAITING_TO_START;
     private TrigSettingsData _trigSettingsData = new TrigSettingsData();
     private bool _allCorrect = false;
+    private uint _numberCorrect = 0;
     private GameObject _currentHUDCanvas;
     private GameObject _currentInputCanvas;
+    private Coroutine _blinkingTextCoroutine;
+    private GameObject _asteroid;
+    private GameObject _missile;
+    private TrigMissile _trigMissile;
 
     public static TrigQuestionManager Instance
     {
@@ -84,7 +113,7 @@ public class TrigQuestionManager : QuestionManager
         }
     }
 
-    public bool AllCorrect { get => _allCorrect; }
+    //public bool AllCorrect { get => _allCorrect; }
 
     private void Awake()
     {
@@ -112,6 +141,24 @@ public class TrigQuestionManager : QuestionManager
         if (_questionNumberText != null) { SetQuestionNumber(_currentQuestion); }
         ResetQuestions();
         SetCanvases(QM_State.WAITING_TO_START);
+
+
+
+    }
+
+    private void SpawnAsteroid()
+    {
+        if (_asteroid != null) return; //asteroid already exists
+        if (_targetAsteroidPrefab == null) return; //prefab not referenced
+        _asteroid = Instantiate(_targetAsteroidPrefab, _targetAsteroidSpawnPoint);
+    }
+
+    private void SpawnMissile()
+    {
+        if (_missile != null) return; //missile already exists
+        if (_missilePrefab == null) return; //prefab not referenced
+        _missile = Instantiate(_missilePrefab, _missileSpawnPoint);
+        _trigMissile = _missile.GetComponent<TrigMissile>();
     }
 
     private void SetQuestionNumber(uint questionNumber)
@@ -127,29 +174,51 @@ public class TrigQuestionManager : QuestionManager
                 if (_welcomeHUDCanvas != null) { _welcomeHUDCanvas.SetActive(true); _currentHUDCanvas = _welcomeHUDCanvas; }
                 if (_questionHUDCanvas != null) { _questionHUDCanvas.SetActive(false); }
                 if (_firingHUDCanvas != null) { _firingHUDCanvas.SetActive(false); }
+                if (_firingCompleteHUDCanvas != null) { _firingCompleteHUDCanvas.SetActive(false);}
                 if (_welcomeInputCanvas != null) { _welcomeInputCanvas.SetActive(true); _currentInputCanvas = _welcomeInputCanvas; }
                 if (_answerInputCanvas != null) { _answerInputCanvas.SetActive(false); };
                 if (_firingInputCanvas != null) { _firingInputCanvas.SetActive(false); }
+                if (_firingCompleteInputCanvas != null) { _firingCompleteInputCanvas.SetActive(false); }
                 break;
             case QM_State.ANSWERING:
                 if (_welcomeHUDCanvas != null) { _welcomeHUDCanvas.SetActive(false); }
                 if (_questionHUDCanvas != null) { _questionHUDCanvas.SetActive(true); _currentHUDCanvas = _questionHUDCanvas; }
                 if (_firingHUDCanvas != null) { _firingHUDCanvas.SetActive(false); }
+                if (_firingCompleteHUDCanvas != null) { _firingCompleteHUDCanvas.SetActive(false); }
                 if (_welcomeInputCanvas != null) { _welcomeInputCanvas.SetActive(false); }
                 if (_answerInputCanvas != null) { _answerInputCanvas.SetActive(true); _currentInputCanvas = _answerInputCanvas; }
                 if (_firingInputCanvas != null) { _firingInputCanvas.SetActive(false); }
+                if (_firingCompleteInputCanvas != null) { _firingCompleteInputCanvas.SetActive(false); }
                 break;
             case QM_State.FIRING_SEQUENCE:
                 if (_welcomeHUDCanvas != null) { _welcomeHUDCanvas.SetActive(false); }
                 if (_questionHUDCanvas != null) { _questionHUDCanvas.SetActive(false); }
                 if (_firingHUDCanvas != null) { _firingHUDCanvas.SetActive(true); _currentHUDCanvas = _firingHUDCanvas; }
+                if (_firingCompleteHUDCanvas != null) { _firingCompleteHUDCanvas.SetActive(false); }
                 if (_welcomeInputCanvas != null) { _welcomeInputCanvas.SetActive(false); }
                 if (_answerInputCanvas != null) { _answerInputCanvas.SetActive(false); };
                 if (_firingInputCanvas != null) { _firingInputCanvas.SetActive(true); _currentInputCanvas = _firingInputCanvas; }
+                if (_firingCompleteInputCanvas != null) { _firingCompleteInputCanvas.SetActive(false); }
                 break;
             case QM_State.ALL_CORRECT:
+                if (_welcomeHUDCanvas != null) { _welcomeHUDCanvas.SetActive(false); }
+                if (_questionHUDCanvas != null) { _questionHUDCanvas.SetActive(false); }
+                if (_firingHUDCanvas != null) { _firingHUDCanvas.SetActive(false); }
+                if (_firingCompleteHUDCanvas != null) { _firingCompleteHUDCanvas.SetActive(true); _currentHUDCanvas = _firingCompleteHUDCanvas; }
+                if (_welcomeInputCanvas != null) { _welcomeInputCanvas.SetActive(false); }
+                if (_answerInputCanvas != null) { _answerInputCanvas.SetActive(false); };
+                if (_firingInputCanvas != null) { _firingInputCanvas.SetActive(false);  }
+                if (_firingCompleteInputCanvas != null) { _firingCompleteInputCanvas.SetActive(true); _currentInputCanvas = _firingCompleteInputCanvas; }
                 break;
             case QM_State.INCORRECT:
+                if (_welcomeHUDCanvas != null) { _welcomeHUDCanvas.SetActive(false); }
+                if (_questionHUDCanvas != null) { _questionHUDCanvas.SetActive(false); }
+                if (_firingHUDCanvas != null) { _firingHUDCanvas.SetActive(false); }
+                if (_firingCompleteHUDCanvas != null) { _firingCompleteHUDCanvas.SetActive(true); _currentHUDCanvas = _firingCompleteHUDCanvas; }
+                if (_welcomeInputCanvas != null) { _welcomeInputCanvas.SetActive(false); }
+                if (_answerInputCanvas != null) { _answerInputCanvas.SetActive(false); };
+                if (_firingInputCanvas != null) { _firingInputCanvas.SetActive(false); }
+                if (_firingCompleteInputCanvas != null) { _firingCompleteInputCanvas.SetActive(true); _currentInputCanvas = _firingCompleteInputCanvas; }
                 break;
             case QM_State.NUM_OF_STATES:
             default:
@@ -158,7 +227,64 @@ public class TrigQuestionManager : QuestionManager
         //_currentInputCanvas.GetComponentInChildren<Panel>.localScale = _inputCanvasFullScale;
         
         _tweenScaler = _currentHUDCanvas.GetComponentInChildren<UI_TweenScale>();
-        if (_tweenScaler != null) _tweenScaler.GetComponent<RectTransform>().localScale = _hudCanvasFullScale;
+        if (_tweenScaler != null)
+        {
+            _tweenScaler.GetComponent<RectTransform>().localScale = _hudCanvasFullScale;
+            _tweenScaler.speed = _tweenSpeed;
+        }
+        
+        
+    }
+
+    private void ResetFiringSequence()
+    {
+        foreach (TextMeshProUGUI tmpText in _firingSequenceTextFields)
+        {
+            tmpText.enabled = false;
+        }
+
+        _firingSequenceMissileText.enabled = false;
+        _firingSequenceQCorrectText.enabled = false;
+        if (_blinkingTextCoroutine != null) StopCoroutine(_blinkingTextCoroutine);
+    }
+
+    IEnumerator BlinkText(TextMeshProUGUI tmpText, float period)
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(period);
+            tmpText.enabled = !tmpText.enabled;
+        }
+    }
+
+    IEnumerator DoFiringSequence(float pauseTime)
+    {
+        foreach(TextMeshProUGUI tmpText in _firingSequenceTextFields)
+        {
+            tmpText.enabled = true;
+            yield return new WaitForSeconds(pauseTime);
+        }
+
+        _firingSequenceQCorrectText.text = _firingSequenceQCorrectPreText + 
+            _numberCorrect.ToString() + 
+            _firingSequenceQCorrectMidText + 
+            _trigSettingsData.numberOfQuestions.ToString() + 
+            _firingSequenceQCorrectPostText;
+
+        _firingSequenceQCorrectText.enabled = true;
+        yield return new WaitForSeconds(pauseTime);
+        _firingSequenceMissileText.enabled = true;
+        if(_blinkingTextCoroutine != null) StopCoroutine(_blinkingTextCoroutine);
+        _blinkingTextCoroutine = StartCoroutine(BlinkText(_firingSequenceMissileText, _blinkTextPeriod));
+
+        if(_allCorrect)
+        {
+            if ((_trigMissile != null) && (_asteroid != null)) _trigMissile.Launch(_asteroid.transform);
+        }
+        else
+        {
+            if ((_trigMissile != null) && (_targetMissedPoint != null)) _trigMissile.Launch(_targetMissedPoint);
+        }
         
     }
 
@@ -172,7 +298,7 @@ public class TrigQuestionManager : QuestionManager
         return (v1.x > v2.x) || (v1.y > v2.y) || (v1.z > v2.z);
     }
 
-    IEnumerator SwitchCanvases(QM_State newState, QM_State currentState)
+    IEnumerator SwitchCanvases(QM_State newState, QM_State currentState, System.Action action = null)
     {
         //disable user input
         SetInputInteractions(false);
@@ -216,10 +342,49 @@ public class TrigQuestionManager : QuestionManager
                 }
                 break;
             case QM_State.FIRING_SEQUENCE:
+                if(currentState == QM_State.ANSWERING)
+                {
+                    if (_tweenScaler != null)
+                    {
+                        _tweenScaler.Play();
+                        while (Vector3GreaterThan(_tweenScaler.GetComponent<RectTransform>().localScale, _hudCanvasMinScaleThreshold))
+                        {
+                            yield return null;
+                        }
+                    }
+
+                    SetCanvases(newState);
+                }
                 break;
             case QM_State.ALL_CORRECT:
+                if (currentState == QM_State.FIRING_SEQUENCE)
+                {
+                    if (_tweenScaler != null)
+                    {
+                        _tweenScaler.Play();
+                        while (Vector3GreaterThan(_tweenScaler.GetComponent<RectTransform>().localScale, _hudCanvasMinScaleThreshold))
+                        {
+                            yield return null;
+                        }
+                    }
+
+                    SetCanvases(newState);
+                }
                 break;
             case QM_State.INCORRECT:
+                if (currentState == QM_State.FIRING_SEQUENCE)
+                {
+                    if (_tweenScaler != null)
+                    {
+                        _tweenScaler.Play();
+                        while (Vector3GreaterThan(_tweenScaler.GetComponent<RectTransform>().localScale, _hudCanvasMinScaleThreshold))
+                        {
+                            yield return null;
+                        }
+                    }
+
+                    SetCanvases(newState);
+                }
                 break;
             case QM_State.NUM_OF_STATES:
                 break;
@@ -228,6 +393,13 @@ public class TrigQuestionManager : QuestionManager
 
         //enable user input
         SetInputInteractions(true);
+        //execute the callback (if any)
+        action?.Invoke();
+    }
+
+    private void FiringCanvasLoadedAction()
+    {
+        StartCoroutine(DoFiringSequence(_firingSequencePause));
     }
 
     private void DoTransition()
@@ -237,20 +409,14 @@ public class TrigQuestionManager : QuestionManager
             case QM_State.WAITING_TO_START:
                 if((_qmState == QM_State.INCORRECT) || (_qmState == QM_State.ALL_CORRECT))
                 {
-                    
-
-                    
                     ResetQuestions();
-                    StartCoroutine(SwitchCanvases(_nextState, _qmState));
-                    
+                    StartCoroutine(SwitchCanvases(_nextState, _qmState));  
                     _qmState = _nextState;
                 }
                 break;
             case QM_State.ANSWERING:
                 if(_qmState == QM_State.WAITING_TO_START)
                 {
-
-
                     StartCoroutine(SwitchCanvases(_nextState, _qmState));
                     _qmState = _nextState;
                 }
@@ -258,13 +424,24 @@ public class TrigQuestionManager : QuestionManager
             case QM_State.FIRING_SEQUENCE:
                 if(_qmState == QM_State.ANSWERING)
                 {
-                    StartCoroutine(SwitchCanvases(_nextState, _qmState));
+                    ResetFiringSequence();
+                    StartCoroutine(SwitchCanvases(_nextState, _qmState, FiringCanvasLoadedAction));
                     _qmState = _nextState;
                 }
                 break;
             case QM_State.ALL_CORRECT:
+                if(_qmState == QM_State.FIRING_SEQUENCE)
+                {
+                    StartCoroutine(SwitchCanvases(_nextState, _qmState, UpdateFiringCompleteText));
+                    _qmState = _nextState;
+                }
                 break;
             case QM_State.INCORRECT:
+                if (_qmState == QM_State.FIRING_SEQUENCE)
+                {
+                    StartCoroutine(SwitchCanvases(_nextState, _qmState, UpdateFiringCompleteText));
+                    _qmState = _nextState;
+                }
                 break;
             case QM_State.NUM_OF_STATES:
             default:
@@ -274,13 +451,22 @@ public class TrigQuestionManager : QuestionManager
 
     private void ResetQuestions()
     {
+        Random.InitState((int)System.DateTime.Now.Ticks);
         _allCorrect = true;
+        _numberCorrect = 0;
+
+        if (_questionNumberWelcomeText != null) _questionNumberWelcomeText.text = _questionWelcomePreText + _trigSettingsData.numberOfQuestions.ToString() + _questionWelcomePostText;
 
         SwitchOffAnswerToggles();
+        _startButton.isOn = false;
+        _retryButton.isOn = false;
 
         _selectedAnswer = INVALID_ANSWER;
         _currentQuestion = 1;
-        //todo: respawn the targets
+        SetQuestionNumber(_currentQuestion);
+
+        SpawnAsteroid();
+        SpawnMissile();
 
         SetFireButtonText("Submit");
         NextQuestion();
@@ -303,9 +489,18 @@ public class TrigQuestionManager : QuestionManager
         }
     }
 
-    public void StartPressed()
+    public void StartPressed(Toggle buttonToggle)
     {
+        if (buttonToggle == null) return;
+        if (!buttonToggle.isOn) return;
         NextState = QM_State.ANSWERING;
+    }
+
+    public void RetryPressed(Toggle buttonToggle)
+    {
+        if (buttonToggle == null) return;
+        if (!buttonToggle.isOn) return;
+        NextState = QM_State.WAITING_TO_START;
     }
 
     public void ButtonCheckAnswer(Toggle buttonToggle)
@@ -314,6 +509,46 @@ public class TrigQuestionManager : QuestionManager
         if (!buttonToggle.isOn) return;
 
         CheckAnswer();
+    }
+
+    IEnumerator TestMissile()
+    {
+        yield return new WaitForSeconds(4);
+        FiringSequenceComplete();
+    }
+
+    public void FiringSequenceComplete()
+    {
+        if (_qmState == QM_State.FIRING_SEQUENCE)
+        {
+            if(_allCorrect)
+            {
+                Destroy(_asteroid);
+                NextState = QM_State.ALL_CORRECT;
+            }
+            else
+            {
+                //nothing to destroy
+                NextState = QM_State.INCORRECT;
+            }
+
+        }
+    }
+
+    private void UpdateFiringCompleteText()
+    {
+        if(_allCorrect)
+        {
+            _firingCompleteText.text = _firingCompleteAllCorrect;
+            _firingCompleteText.color = _firingCompleteAllCorrectColor;
+        }
+        else
+        {
+            _firingCompleteText.text = _firingCompleteIncorrect;
+            _firingCompleteText.color = _firingCompleteIncorrectColor;
+        }
+        if (_blinkingTextCoroutine != null) StopCoroutine(_blinkingTextCoroutine);
+        _blinkingTextCoroutine = StartCoroutine(BlinkText(_firingCompleteText, _blinkTextPeriod));
     }
 
     public override void CheckAnswer()
@@ -339,6 +574,7 @@ public class TrigQuestionManager : QuestionManager
 
         if (_selectedAnswer == _questionData.b)
         {
+            _numberCorrect++;
             Debug.Log("Question " + (_currentQuestion - 1).ToString() + " - CORRECT ANSWER: AllCorrect = " + _allCorrect.ToString());
 
         }
@@ -376,6 +612,8 @@ public class TrigQuestionManager : QuestionManager
     {
         if(trigSettingsData == null) return;
         _trigSettingsData = trigSettingsData;
+
+         
     }
 
     public void SaveTrigSettings(ref TrigSettingsData trigSettingsData)
