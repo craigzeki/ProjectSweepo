@@ -382,6 +382,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 633328588695450573, guid: 9aa3a071aa5d3714288546dd8259919b, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 633328588695450573, guid: 9aa3a071aa5d3714288546dd8259919b, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4848363677727507073}
@@ -392,6 +396,14 @@ PrefabInstance:
     - target: {fileID: 633328588695450573, guid: 9aa3a071aa5d3714288546dd8259919b, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: ContainerManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 633328588695450573, guid: 9aa3a071aa5d3714288546dd8259919b, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 4295958991326660760}
+    - target: {fileID: 633328588695450573, guid: 9aa3a071aa5d3714288546dd8259919b, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.UI.Toggle, UnityEngine.UI
       objectReference: {fileID: 0}
     - target: {fileID: 2111377184316622464, guid: 9aa3a071aa5d3714288546dd8259919b, type: 3}
       propertyPath: m_SizeDelta.x

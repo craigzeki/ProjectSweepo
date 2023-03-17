@@ -9,6 +9,16 @@ using TMPro;
 
 public class SaveLoadManager : MonoBehaviour
 {
+    private enum StatusTextState
+    {
+        LOADING = 0,
+        SAVING,
+        SUCCESSFUL,
+        UNSUCCESSFUL,
+        NOTHING,
+        UNKNOWN,
+        NUM_OF_STATES
+    }
     private class ObjectHashTable
     {
         public Dictionary<int, SaveableObject> objectHash = new Dictionary<int, SaveableObject>();
@@ -71,9 +81,11 @@ public class SaveLoadManager : MonoBehaviour
     [SerializeField] private GameObject[] saveTypePrefabs = new GameObject[(int)SaveType.NUM_OF_TYPES];
     //[EnumNamedArray(typeof(ObjectType))]
     //[SerializeField] private GameObject[] objectTypePrefabs = new GameObject[(int)ObjectType.NUM_OF_OBJECTS];
-    [SerializeField] private GameObject savingLoadingIcon;
-    [SerializeField] private TextMeshProUGUI statusMessage;
-    
+    [SerializeField] private TextMeshProUGUI _loadingText;
+    [SerializeField] private TextMeshProUGUI _loadSuccessfulText;
+    [SerializeField] private TextMeshProUGUI _loadFailedText;
+    [SerializeField] private float _statusTextBlinkPeriod = 0.6f;
+
     private Dictionary<SaveType, ObjectHashTable> hashTables = new Dictionary<SaveType,ObjectHashTable>();
     private string textToParse;
     private GameSaveData downloadedGameSaveData;
@@ -82,6 +94,8 @@ public class SaveLoadManager : MonoBehaviour
     private JsonBinIo jsonBinIo;
     private bool loadGameRequested = false;
     private bool saveGameRequested = false;
+    private StatusTextState _statusTextState = StatusTextState.UNKNOWN;
+    private Coroutine _statusTextCoroutine;
 
     public static SaveLoadManager Instance
     {
@@ -121,6 +135,8 @@ public class SaveLoadManager : MonoBehaviour
 
         InitSaveGameData();
         InitGameloadData();
+
+        UpdateStatusText(StatusTextState.NOTHING);
 
         jsonBinIo = new JsonBinIo("63ff7210c0e7653a0580bd3d");
     }
@@ -372,8 +388,10 @@ public class SaveLoadManager : MonoBehaviour
                 case JsonBinIo.JsonBinIoTaskState.NOT_STARTED:
                     break;
                 case JsonBinIo.JsonBinIoTaskState.STARTED:
+                    UpdateStatusText(StatusTextState.LOADING);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.FAILED_TO_START:
+                    UpdateStatusText(StatusTextState.UNSUCCESSFUL);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.COMPLETE:
                     //load the game
@@ -381,17 +399,19 @@ public class SaveLoadManager : MonoBehaviour
                     Debug.Log(jsonBinIo.ReadBin.Result);
                     LoadGameFromJson(jsonBinIo.ReadBin.Result);
                     loadGameRequested = false;
-                    
+                    UpdateStatusText(StatusTextState.SUCCESSFUL);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.ERROR:
                     //report error
                     Debug.Log("Error loading from cloud: " + jsonBinIo.ReadBin.ErrorMessage);
                     loadGameRequested = false;
+                    UpdateStatusText(StatusTextState.UNSUCCESSFUL);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.NUM_OF_STATES:
                     //report error
                     Debug.Log("Error loading from cloud: INVALID STATE");
                     loadGameRequested = false;
+                    UpdateStatusText(StatusTextState.UNSUCCESSFUL);
                     break;
                 default:
                     break;
@@ -405,22 +425,27 @@ public class SaveLoadManager : MonoBehaviour
                 case JsonBinIo.JsonBinIoTaskState.NOT_STARTED:
                     break;
                 case JsonBinIo.JsonBinIoTaskState.STARTED:
+                    UpdateStatusText(StatusTextState.SAVING);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.FAILED_TO_START:
+                    UpdateStatusText(StatusTextState.UNSUCCESSFUL);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.COMPLETE:
                     Debug.Log(jsonBinIo.UpdateBin.Result);
                     saveGameRequested = false;
+                    UpdateStatusText(StatusTextState.SUCCESSFUL);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.ERROR:
                     //report error
                     Debug.Log("Error saviong to cloud: " + jsonBinIo.UpdateBin.ErrorMessage);
                     saveGameRequested = false;
+                    UpdateStatusText(StatusTextState.UNSUCCESSFUL);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.NUM_OF_STATES:
                     //report error
                     Debug.Log("Error saving to cloud: INVALID STATE");
                     saveGameRequested = false;
+                    UpdateStatusText(StatusTextState.UNSUCCESSFUL);
                     break;
                 default:
                     break;
@@ -428,21 +453,86 @@ public class SaveLoadManager : MonoBehaviour
         }
 
         //show hide the saving icon
-        if (savingLoadingIcon == null) return;
-        savingLoadingIcon.SetActive(loadGameRequested || saveGameRequested);
+        //if (savingLoadingIcon == null) return;
+        //savingLoadingIcon.SetActive(loadGameRequested || saveGameRequested);
 
-        if (statusMessage == null) return;
-        if (loadGameRequested)
+        //if (statusMessage == null) return;
+        //if (loadGameRequested)
+        //{
+        //    statusMessage.text = "Loading...";
+        //}
+        //else if(saveGameRequested)
+        //{
+        //    statusMessage.text = "Saving...";
+        //}
+        //else
+        //{
+        //    statusMessage.text = "";
+        //}
+
+        
+        
+    }
+
+    private void UpdateStatusText(StatusTextState state)
+    {
+        if (state == _statusTextState) return;
+        if (_statusTextCoroutine != null) StopCoroutine(_statusTextCoroutine);
+
+        switch (state)
         {
-            statusMessage.text = "Loading...";
+            case StatusTextState.LOADING:
+                _loadingText.enabled = true;
+                _loadFailedText.enabled = false;
+                _loadSuccessfulText.enabled = false;
+                
+                _statusTextCoroutine = StartCoroutine(BlinkText(_loadingText, _statusTextBlinkPeriod));
+                _statusTextState = state;
+                break;
+            case StatusTextState.SAVING:
+                _loadingText.enabled = false;
+                _loadFailedText.enabled = false;
+                _loadSuccessfulText.enabled = false;
+
+                _statusTextCoroutine = StartCoroutine(BlinkText(_loadingText, _statusTextBlinkPeriod));
+                _statusTextState = state;
+                break;
+            case StatusTextState.SUCCESSFUL:
+                _loadingText.enabled = false;
+                _loadFailedText.enabled = false;
+                _loadSuccessfulText.enabled = true;
+
+                _statusTextCoroutine = StartCoroutine(BlinkText(_loadingText, _statusTextBlinkPeriod));
+                _statusTextState = state;
+                break;
+            case StatusTextState.UNSUCCESSFUL:
+                _loadingText.enabled = false;
+                _loadFailedText.enabled = true;
+                _loadSuccessfulText.enabled = false;
+
+                _statusTextCoroutine = StartCoroutine(BlinkText(_loadingText, _statusTextBlinkPeriod));
+                _statusTextState = state;
+                break;
+            case StatusTextState.NOTHING:
+                _loadingText.enabled = false;
+                _loadFailedText.enabled = false;
+                _loadSuccessfulText.enabled = false;
+                _statusTextState = state;
+                break;
+            case StatusTextState.UNKNOWN:
+            case StatusTextState.NUM_OF_STATES:
+                break;
+
         }
-        else if(saveGameRequested)
+        
+    }
+
+    IEnumerator BlinkText(TextMeshProUGUI tmpText, float period)
+    {
+        while (true)
         {
-            statusMessage.text = "Saving...";
-        }
-        else
-        {
-            statusMessage.text = "";
+            yield return new WaitForSeconds(period);
+            tmpText.enabled = !tmpText.enabled;
         }
     }
 

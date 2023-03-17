@@ -21,8 +21,10 @@ public class ContainerManager : MonoBehaviour
         startValue = shelfTransform.localPosition.z;
         lerpPos = shelfTransform.localPosition;
     }
-    IEnumerator DoShelfMove(bool isOpening)
+    IEnumerator DoShelfMove(bool isOpening, Toggle toggle)
     {
+        shelfMoving = true;
+        toggle.interactable = false;
         float timeElapsed = 0;
         while (timeElapsed < lerpDuration)
         {
@@ -34,6 +36,7 @@ public class ContainerManager : MonoBehaviour
             {
                 lerpPos.z = Mathf.Lerp(endValue, startValue, timeElapsed / lerpDuration);
             }
+
             timeElapsed += Time.deltaTime;
             yield return null;
         }
@@ -46,7 +49,8 @@ public class ContainerManager : MonoBehaviour
         {
             lerpPos.z = startValue;
         }
-        
+        shelfMoving = false;
+        toggle.interactable = true;
     }
 
     // Update is called once per frame
@@ -60,13 +64,15 @@ public class ContainerManager : MonoBehaviour
         buttonToggle.interactable = !isLocked && !shelfMoving;
     }
 
-    public void buttonPressed()
+    public void buttonPressed(Toggle toggle)
     {
         if (isLocked) return;
         if (buttonToggle == null) return;
         if (shelfTransform == null) return;
         if (shelfMoving) return;
 
-        StartCoroutine(DoShelfMove(buttonToggle.isOn));
+        
+
+        StartCoroutine(DoShelfMove(buttonToggle.isOn, toggle));
     }
 }
