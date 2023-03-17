@@ -33,6 +33,7 @@ public class TrigQuestionManager : QuestionManager
     [SerializeField] private Color _fireButtonTextEnabledColor;
     [SerializeField] private Color _fireButtonTextDisabledColor;
     [SerializeField] private GameObject _targetAsteroidPrefab;
+    [SerializeField] private ParticleSystem _explosionParticleSystem;
     [SerializeField] private Transform _targetAsteroidSpawnPoint;
     [SerializeField] private Transform _targetMissedPoint;
     [SerializeField] private GameObject _missilePrefab;
@@ -521,9 +522,9 @@ public class TrigQuestionManager : QuestionManager
     {
         if (_qmState == QM_State.FIRING_SEQUENCE)
         {
+
             if(_allCorrect)
             {
-                Destroy(_asteroid);
                 NextState = QM_State.ALL_CORRECT;
             }
             else

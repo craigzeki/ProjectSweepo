@@ -65,8 +65,8 @@ public class TrigMissile : MonoBehaviour
                 {
                     //previously reached the first waypoint - so we must have also reached final target
                     //destroy missile and target
+                    //target destroyed by detecting collision
                     TrigQuestionManager.Instance.FiringSequenceComplete();
-                    
                     Destroy(this.gameObject);
                 }
                 else

@@ -22053,6 +22053,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4440387905551951392, guid: d541332b302a4c1448a44a5ab66af4e6, type: 3}
     - target: {fileID: 157316245, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
+      propertyPath: _explosionParticleSystem
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 157316245, guid: 1a5dc39ff41511e459a5d4f7d80adbcb, type: 3}
       propertyPath: _targetAsteroidSpawnPoint
       value: 
       objectReference: {fileID: 527621322}
