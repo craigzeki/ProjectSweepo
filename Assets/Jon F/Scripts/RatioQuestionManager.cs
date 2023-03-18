@@ -148,4 +148,8 @@ public class RatioQuestionManager : QuestionManager
         _fireButtonText.color = textColor;
     }
 
+    protected override void ResetQuestions()
+    {
+        throw new System.NotImplementedException();
+    }
 }

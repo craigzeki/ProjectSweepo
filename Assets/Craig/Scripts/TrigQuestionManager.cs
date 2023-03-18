@@ -149,15 +149,17 @@ public class TrigQuestionManager : QuestionManager
 
     private void SpawnAsteroid()
     {
-        if (_asteroid != null) return; //asteroid already exists
+        
         if (_targetAsteroidPrefab == null) return; //prefab not referenced
+        if (_asteroid != null) Destroy(_asteroid); //asteroid already exists, destroy existing one
         _asteroid = Instantiate(_targetAsteroidPrefab, _targetAsteroidSpawnPoint);
     }
 
     private void SpawnMissile()
     {
-        if (_missile != null) return; //missile already exists
+        
         if (_missilePrefab == null) return; //prefab not referenced
+        if (_missile != null) Destroy(_missile); //missile already exists
         _missile = Instantiate(_missilePrefab, _missileSpawnPoint);
         _trigMissile = _missile.GetComponent<TrigMissile>();
     }
@@ -450,9 +452,9 @@ public class TrigQuestionManager : QuestionManager
         }
     }
 
-    private void ResetQuestions()
+    protected override void ResetQuestions()
     {
-        Random.InitState((int)System.DateTime.Now.Ticks);
+        
         _allCorrect = true;
         _numberCorrect = 0;
 

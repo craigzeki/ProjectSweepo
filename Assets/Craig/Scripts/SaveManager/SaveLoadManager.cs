@@ -97,6 +97,10 @@ public class SaveLoadManager : MonoBehaviour
     private StatusTextState _statusTextState = StatusTextState.UNKNOWN;
     private Coroutine _statusTextCoroutine;
 
+
+    public event EventHandler SaveablesDestroyed;
+    public event EventHandler<bool> LoadComplete;
+
     public static SaveLoadManager Instance
     {
         get
@@ -271,6 +275,7 @@ public class SaveLoadManager : MonoBehaviour
         {
             objectHashTable.DestroySaveables();
         }
+        OnSaveablesDestroyed(EventArgs.Empty);
     }
 
     private void InitGameloadData()
@@ -392,6 +397,7 @@ public class SaveLoadManager : MonoBehaviour
                     break;
                 case JsonBinIo.JsonBinIoTaskState.FAILED_TO_START:
                     UpdateStatusText(StatusTextState.UNSUCCESSFUL);
+                    OnLoadComplete(false);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.COMPLETE:
                     //load the game
@@ -400,18 +406,21 @@ public class SaveLoadManager : MonoBehaviour
                     LoadGameFromJson(jsonBinIo.ReadBin.Result);
                     loadGameRequested = false;
                     UpdateStatusText(StatusTextState.SUCCESSFUL);
+                    OnLoadComplete(true);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.ERROR:
                     //report error
                     Debug.Log("Error loading from cloud: " + jsonBinIo.ReadBin.ErrorMessage);
                     loadGameRequested = false;
                     UpdateStatusText(StatusTextState.UNSUCCESSFUL);
+                    OnLoadComplete(false);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.NUM_OF_STATES:
                     //report error
                     Debug.Log("Error loading from cloud: INVALID STATE");
                     loadGameRequested = false;
                     UpdateStatusText(StatusTextState.UNSUCCESSFUL);
+                    OnLoadComplete(false);
                     break;
                 default:
                     break;
@@ -502,7 +511,7 @@ public class SaveLoadManager : MonoBehaviour
                 _loadFailedText.enabled = false;
                 _loadSuccessfulText.enabled = true;
 
-                _statusTextCoroutine = StartCoroutine(BlinkText(_loadingText, _statusTextBlinkPeriod));
+                _statusTextCoroutine = StartCoroutine(BlinkText(_loadSuccessfulText, _statusTextBlinkPeriod));
                 _statusTextState = state;
                 break;
             case StatusTextState.UNSUCCESSFUL:
@@ -510,7 +519,7 @@ public class SaveLoadManager : MonoBehaviour
                 _loadFailedText.enabled = true;
                 _loadSuccessfulText.enabled = false;
 
-                _statusTextCoroutine = StartCoroutine(BlinkText(_loadingText, _statusTextBlinkPeriod));
+                _statusTextCoroutine = StartCoroutine(BlinkText(_loadFailedText, _statusTextBlinkPeriod));
                 _statusTextState = state;
                 break;
             case StatusTextState.NOTHING:
@@ -624,4 +633,15 @@ public class SaveLoadManager : MonoBehaviour
         LoadGameFromJson(jsonData);
         return true;
     }
+
+    protected virtual void OnSaveablesDestroyed(EventArgs e)
+    {
+        SaveablesDestroyed?.Invoke(this, e);
+    }
+
+    protected virtual void OnLoadComplete(bool IsSuccessful)
+    {
+        LoadComplete?.Invoke(this, IsSuccessful);
+    }
+
 }

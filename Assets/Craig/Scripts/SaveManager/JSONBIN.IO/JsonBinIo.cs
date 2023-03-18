@@ -86,16 +86,28 @@ public class JsonBinIo
                 //also sets the Content-Type header
                 request.Content = new StringContent(content, System.Text.Encoding.UTF8, "application/json" );
             }
-            var response = await client.SendAsync(request);
-            if (response.StatusCode != HttpStatusCode.OK)
+            try
             {
-                state = JsonBinIoTaskState.ERROR;
-                errorMessage = await response.Content.ReadAsStringAsync();
-                return;
+                client.Timeout = TimeSpan.FromSeconds(20);
+                using var response = await client.SendAsync(request);
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    state = JsonBinIoTaskState.ERROR;
+                    errorMessage = await response.Content.ReadAsStringAsync();
+                    return;
+                }
+                result = await response.Content.ReadAsStringAsync();
+                this.state = JsonBinIoTaskState.COMPLETE;
             }
-            result = await response.Content.ReadAsStringAsync();
+            catch (Exception ex)
+            {
+                this.state = JsonBinIoTaskState.ERROR;
+            }
             
-            this.state = JsonBinIoTaskState.COMPLETE;
+            
+            
+            
+            
         }
 
         public void FailedToStart(string error)
