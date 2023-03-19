@@ -54,7 +54,8 @@ public class GameManager : MonoBehaviour
                 {
                     if (!SaveLoadManager.Instance.LoadGameFromLocal())
                     {
-                        SaveLoadManager.Instance.SaveGameToLocal();
+                        SaveLoadManager.Instance.SaveGameToLocal(); //saves default set to the JSON file
+                        SaveLoadManager.Instance.LoadGameFromLocal(); //then loads it back to the game
                     }
                     TrigQuestionManager.Instance.NextQuestion();
                     currentState = NewState;

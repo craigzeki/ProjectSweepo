@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[Serializable]
 public enum SaveType : int
 {
     Q_TRIG = 0,
