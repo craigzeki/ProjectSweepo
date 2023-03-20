@@ -6,8 +6,4 @@ using UnityEngine;
 public class RatioQuestion : MonoBehaviour
 {
     [SerializeField] public RatioQuestionData ratioQuestionData = new RatioQuestionData();
-    
-
-    
-
 }

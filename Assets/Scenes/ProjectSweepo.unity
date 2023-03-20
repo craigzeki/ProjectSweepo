@@ -185,7 +185,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1810540917973660, guid: 3e7db1b08fec4094d8b9d5262cd0adbe, type: 3}
       propertyPath: m_Name
-      value: SM_Hud_Screen_Backing_01 (6)
+      value: ing_01 (6)een_Backing_01 (6)
       objectReference: {fileID: 0}
     - target: {fileID: 1810540917973660, guid: 3e7db1b08fec4094d8b9d5262cd0adbe, type: 3}
       propertyPath: m_StaticEditorFlags
