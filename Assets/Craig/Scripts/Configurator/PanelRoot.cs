@@ -27,11 +27,13 @@ public abstract class PanelRoot : MonoBehaviour
     private Coroutine _closePanelCoroutine;
     private PanelState _panelState = PanelState.INIT;
     private bool _backPressed = false;
+    private List<ButtonTextHighlighter> _textHighlighterList = new List<ButtonTextHighlighter>();
 
     private void Awake()
     {
         _panelFullScale = GetComponent<RectTransform>().localScale;
         _tweenScaler = GetComponent<UI_TweenScale>();
+        GetComponentsInChildren<ButtonTextHighlighter>(true, _textHighlighterList);
     }
 
     private void Update()
@@ -76,6 +78,10 @@ public abstract class PanelRoot : MonoBehaviour
     {
         _panelState = PanelState.INIT;
         GetComponent<RectTransform>().localScale = _panelFullScale;
+        foreach(ButtonTextHighlighter bth in _textHighlighterList)
+        {
+            bth.ResetButton();
+        }
     }
 
     public void LoadPanel(PanelRoot previousPanel)
@@ -88,6 +94,30 @@ public abstract class PanelRoot : MonoBehaviour
     {
         _closePanelCoroutine ??= StartCoroutine(DoClosePanel());
         _panelState= PanelState.CLOSING;
+    }
+
+    public void LockButtons()
+    {
+        foreach(ButtonTextHighlighter bth in _textHighlighterList)
+        {
+            bth.Lock();
+        }
+    }
+
+    public void UnlockButtons()
+    {
+        foreach (ButtonTextHighlighter bth in _textHighlighterList)
+        {
+            bth.Unlock();
+        }
+    }
+
+    public void RestoreButtons()
+    {
+        foreach (ButtonTextHighlighter bth in _textHighlighterList)
+        {
+            bth.Restore();
+        }
     }
 
     IEnumerator DoClosePanel()

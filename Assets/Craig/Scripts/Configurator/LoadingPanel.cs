@@ -7,6 +7,7 @@ public class LoadingPanel : PanelRoot
     [SerializeField] private PanelRoot _questionSelectPanel;
     [SerializeField] private float _startupDelay = 1.5f;
     [SerializeField] private float _closeDelay = 1.5f;
+    [SerializeField] private bool _simulateLoading = false;
 
 
     private Coroutine _panelDelayCoroutine;
@@ -42,7 +43,15 @@ public class LoadingPanel : PanelRoot
         if((!_delaying) && (_runOnce == false))
         {
             _runOnce = true;
-            SaveLoadManager.Instance.RequestLoadGame();
+            if(_simulateLoading)
+            {
+                QuestionsLoaded(this, true);
+            }
+            else
+            {
+                SaveLoadManager.Instance.RequestLoadGame();
+            }
+            
         }
 
         if((!_delaying) && (_questionsLoaded))
