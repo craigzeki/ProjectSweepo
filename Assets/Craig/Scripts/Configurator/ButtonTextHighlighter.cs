@@ -24,11 +24,13 @@ public class ButtonTextHighlighter : MonoBehaviour
     private bool _isPressed = false;
     private bool _isLocked = false;
     private bool _restoreValue = false;
+    private bool _isInit = false;
 
     private void Awake()
     {
         if (_textMeshProText == null) return;
         _normalColor = _textMeshProText.color;
+        _isInit = true;
     }
 
     public void ResetButton()
@@ -37,7 +39,7 @@ public class ButtonTextHighlighter : MonoBehaviour
         _isLocked = false;
         _restoreValue = false;
         _isPressed = false;
-        if (_textMeshProText != null) _textMeshProText.color = _normalColor;
+        if ((_textMeshProText != null) && (_isInit)) _textMeshProText.color = _normalColor;
         
     }
 

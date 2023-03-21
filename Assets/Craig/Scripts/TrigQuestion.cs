@@ -6,8 +6,4 @@ using UnityEngine;
 public class TrigQuestion : MonoBehaviour
 {
     [SerializeField] public TrigQuestionData trigQuestionData = new TrigQuestionData();
-    
-
-    
-
 }

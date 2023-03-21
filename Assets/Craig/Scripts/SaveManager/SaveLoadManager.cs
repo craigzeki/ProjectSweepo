@@ -99,7 +99,10 @@ public class SaveLoadManager : MonoBehaviour
 
 
     public event EventHandler SaveablesDestroyed;
-    public event EventHandler<bool> LoadComplete;
+    public event EventHandler<bool> CloudLoadComplete;
+    public event EventHandler<bool> LocalLoadComplete;
+    public event EventHandler<bool> CloudSaveComplete;
+    public event EventHandler<bool> LocalSaveComplete;
 
     public static SaveLoadManager Instance
     {
@@ -145,6 +148,12 @@ public class SaveLoadManager : MonoBehaviour
         jsonBinIo = new JsonBinIo("63ff7210c0e7653a0580bd3d");
     }
 
+    public GameObject CreateSaveable(SaveType saveType)
+    {
+        if (saveType >= SaveType.NUM_OF_TYPES) return null;
+        if ((int)saveType >= saveTypePrefabs.Length) return null;
+        return Instantiate(saveTypePrefabs[(int)saveType]);
+    }
 
     public bool RegisterAsSaveable(SaveType saveType, SaveableObject saveableObject, out int hashIndex)
     {
@@ -340,8 +349,13 @@ public class SaveLoadManager : MonoBehaviour
 
     public void SaveGameToLocal()
     {
-        if (gameSaveDataPath == "") return;
+        if (gameSaveDataPath == "")
+        {
+            OnLocalSaveCompleted(false);
+            return;
+        }
         System.IO.File.WriteAllText(gameSaveDataPath, SaveGamePrepareJsonString());
+        OnLocalSaveCompleted(true);
     }
 
     public void RequestSaveGame()
@@ -397,7 +411,7 @@ public class SaveLoadManager : MonoBehaviour
                     break;
                 case JsonBinIo.JsonBinIoTaskState.FAILED_TO_START:
                     UpdateStatusText(StatusTextState.UNSUCCESSFUL);
-                    OnLoadComplete(false);
+                    OnCloudLoadComplete(false);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.COMPLETE:
                     //load the game
@@ -406,21 +420,21 @@ public class SaveLoadManager : MonoBehaviour
                     LoadGameFromJson(jsonBinIo.ReadBin.Result);
                     loadGameRequested = false;
                     UpdateStatusText(StatusTextState.SUCCESSFUL);
-                    OnLoadComplete(true);
+                    OnCloudLoadComplete(true);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.ERROR:
                     //report error
                     Debug.Log("Error loading from cloud: " + jsonBinIo.ReadBin.ErrorMessage);
                     loadGameRequested = false;
                     UpdateStatusText(StatusTextState.UNSUCCESSFUL);
-                    OnLoadComplete(false);
+                    OnCloudLoadComplete(false);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.NUM_OF_STATES:
                     //report error
                     Debug.Log("Error loading from cloud: INVALID STATE");
                     loadGameRequested = false;
                     UpdateStatusText(StatusTextState.UNSUCCESSFUL);
-                    OnLoadComplete(false);
+                    OnCloudLoadComplete(false);
                     break;
                 default:
                     break;
@@ -438,23 +452,27 @@ public class SaveLoadManager : MonoBehaviour
                     break;
                 case JsonBinIo.JsonBinIoTaskState.FAILED_TO_START:
                     UpdateStatusText(StatusTextState.UNSUCCESSFUL);
+                    OnCloudSaveCompleted(false);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.COMPLETE:
                     Debug.Log(jsonBinIo.UpdateBin.Result);
                     saveGameRequested = false;
                     UpdateStatusText(StatusTextState.SUCCESSFUL);
+                    OnCloudSaveCompleted(true);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.ERROR:
                     //report error
                     Debug.Log("Error saviong to cloud: " + jsonBinIo.UpdateBin.ErrorMessage);
                     saveGameRequested = false;
                     UpdateStatusText(StatusTextState.UNSUCCESSFUL);
+                    OnCloudSaveCompleted(false);
                     break;
                 case JsonBinIo.JsonBinIoTaskState.NUM_OF_STATES:
                     //report error
                     Debug.Log("Error saving to cloud: INVALID STATE");
                     saveGameRequested = false;
                     UpdateStatusText(StatusTextState.UNSUCCESSFUL);
+                    OnCloudSaveCompleted(false);
                     break;
                 default:
                     break;
@@ -626,11 +644,16 @@ public class SaveLoadManager : MonoBehaviour
     {
         string jsonData;
         //load from file
-        if (!System.IO.File.Exists(gameSaveDataPath)) return false;
+        if (!System.IO.File.Exists(gameSaveDataPath))
+        {
+            OnLocalLoadCompleted(false);
+            return false;
+        }
 
         LoadGamePrepareScene();
         jsonData = System.IO.File.ReadAllText(gameSaveDataPath);
         LoadGameFromJson(jsonData);
+        OnLocalLoadCompleted(true);
         return true;
     }
 
@@ -639,9 +662,23 @@ public class SaveLoadManager : MonoBehaviour
         SaveablesDestroyed?.Invoke(this, e);
     }
 
-    protected virtual void OnLoadComplete(bool IsSuccessful)
+    protected virtual void OnCloudLoadComplete(bool IsSuccessful)
     {
-        LoadComplete?.Invoke(this, IsSuccessful);
+        CloudLoadComplete?.Invoke(this, IsSuccessful);
     }
 
+    protected virtual void OnCloudSaveCompleted(bool IsSuccessful)
+    {
+        CloudSaveComplete?.Invoke(this, IsSuccessful);
+    }
+
+    protected virtual void OnLocalLoadCompleted(bool IsSuccessful)
+    {
+        LocalLoadComplete?.Invoke(this, IsSuccessful);
+    }
+    
+    protected virtual void OnLocalSaveCompleted(bool IsSuccessful)
+    {
+        LocalLoadComplete?.Invoke(this, IsSuccessful);
+    }
 }

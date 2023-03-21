@@ -158,9 +158,19 @@ public class SaveableObject : MonoBehaviour
     //    return true;
     //}
 
+    
+
     public void UnRegisterSaveable()
     {
-        if(!SaveLoadManager.Instance.UnRegisterAsSaveable(saveType, myHashIndex)) Debug.Log("Error when UnRegistering " + this.gameObject.name + " from SaveLoadManager");
+
+        if (!SaveLoadManager.Instance.UnRegisterAsSaveable(saveType, myHashIndex))
+        {
+            Debug.Log("Error when UnRegistering " + this.gameObject.name + " from SaveLoadManager");
+        }
+        else
+        {
+            Debug.Log("Unregistered " + this.gameObject.name + " from SaveLoadManager");
+        }
     }
 
 }

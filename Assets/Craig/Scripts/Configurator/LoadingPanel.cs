@@ -17,7 +17,7 @@ public class LoadingPanel : PanelRoot
     
     protected override void CloseComplete(bool _backPressed)
     {
-        SaveLoadManager.Instance.LoadComplete -= QuestionsLoaded;
+        SaveLoadManager.Instance.CloudLoadComplete -= QuestionsLoaded;
         if(_backPressed)
         {
             //do nothing;
@@ -30,7 +30,7 @@ public class LoadingPanel : PanelRoot
 
     protected override void Init()
     {
-        SaveLoadManager.Instance.LoadComplete += QuestionsLoaded;
+        SaveLoadManager.Instance.CloudLoadComplete += QuestionsLoaded;
     }
 
     protected override void LoadComplete()

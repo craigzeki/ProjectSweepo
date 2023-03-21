@@ -12,7 +12,7 @@ public abstract class QuestionManager : MonoBehaviour
     {
         UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks);
         SaveLoadManager.Instance.SaveablesDestroyed += QuestionsDestroyed;
-        SaveLoadManager.Instance.LoadComplete += QuestionsLoaded;
+        SaveLoadManager.Instance.CloudLoadComplete += QuestionsLoaded;
     }
 
     public void AddLoadedQuestionToList(SaveableObject saveable)
