@@ -96,6 +96,7 @@ public class SaveLoadManager : MonoBehaviour
     private bool saveGameRequested = false;
     private StatusTextState _statusTextState = StatusTextState.UNKNOWN;
     private Coroutine _statusTextCoroutine;
+    private bool _onLoadSaveToLocal = false;
 
 
     public event EventHandler SaveablesDestroyed;
@@ -376,7 +377,7 @@ public class SaveLoadManager : MonoBehaviour
         }
     }
 
-    public void RequestLoadGame()
+    public void RequestLoadGame(bool saveAsLocal = false)
     {
         if(loadGameRequested == true)
         {
@@ -393,6 +394,7 @@ public class SaveLoadManager : MonoBehaviour
         }
         else
         {
+            _onLoadSaveToLocal = saveAsLocal;
             loadGameRequested = true;
         }
     }
@@ -418,9 +420,10 @@ public class SaveLoadManager : MonoBehaviour
                     //consider launching this asynchronously - OK while small data
                     Debug.Log(jsonBinIo.ReadBin.Result);
                     LoadGameFromJson(jsonBinIo.ReadBin.Result);
-                    loadGameRequested = false;
                     UpdateStatusText(StatusTextState.SUCCESSFUL);
+                    if(_onLoadSaveToLocal) SaveGameToLocal();
                     OnCloudLoadComplete(true);
+                    loadGameRequested = false;
                     break;
                 case JsonBinIo.JsonBinIoTaskState.ERROR:
                     //report error
