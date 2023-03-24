@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 
-public class GeometryQuestionData : MonoBehaviour
+[Serializable]
+public class GeometryQuestionData : QuestionRoot
 {
 
     [SerializeField] private Vector2Int startPosition;

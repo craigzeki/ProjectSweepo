@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
+[RequireComponent(typeof(SaveableObject))]
 public class GeometryQuestion : MonoBehaviour
 {
-    [SerializeField] public GeometryQuestionData trigQuestionData = new GeometryQuestionData();
+    [SerializeField] public GeometryQuestionData geometryQuestionData = new GeometryQuestionData();
 }
