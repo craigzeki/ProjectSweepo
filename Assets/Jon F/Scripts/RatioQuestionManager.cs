@@ -19,6 +19,10 @@ public class RatioQuestionManager : QuestionManager
     [SerializeField] private TextMeshProUGUI _fireButtonText;
     [SerializeField] private Color _fireButtonTextEnabledColor;
     [SerializeField] private Color _fireButtonTextDisabledColor;
+    [SerializeField] private float blueplantValue = 1f;
+    [SerializeField] private float redplantValue = 6f;
+    [SerializeField] private float yellowplantValue = 5f;
+
 
     private static RatioQuestionManager instance;
     private RatioQuestionData _questionData;
@@ -28,10 +32,13 @@ public class RatioQuestionManager : QuestionManager
     private List<float> _randomAnswers = new List<float>();
     private float _selectedAnswer = INVALID_ANSWER;
 
+    
+
     public static RatioQuestionManager Instance
     {
         get
         {
+      
             if (instance == null) instance = FindObjectOfType<RatioQuestionManager>();
             return instance;
         }
