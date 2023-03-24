@@ -3,7 +3,7 @@ using System;
 [Serializable]
 public class RatioQuestionData : QuestionRoot
 {
-    public float blueplant = 45f;
-    public float redplant = 45f;
-    public float yellowplant = 45f;
+    public float blueplant = 3f;
+    public float redplant = 5f;
+    public float yellowplant = 6f;
 }
