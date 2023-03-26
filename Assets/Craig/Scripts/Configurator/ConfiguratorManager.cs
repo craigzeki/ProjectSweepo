@@ -29,5 +29,7 @@ public class ConfiguratorManager : MonoBehaviour
         }
 
         if (_versionText != null) _versionText.text = _versionPre + Application.version;
+
+        
     }
 }

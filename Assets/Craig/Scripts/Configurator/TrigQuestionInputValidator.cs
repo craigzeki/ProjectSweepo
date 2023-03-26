@@ -3,9 +3,6 @@ using System;
 
 namespace TMPro
 {
-    /// <summary>
-    /// EXample of a Custom Character Input Validator to only allow digits from 0 to 9.
-    /// </summary>
     [Serializable]
     [CreateAssetMenu(fileName = "InputValidator - TrigQIV.asset", menuName = "TextMeshPro/Input Validators/Trig Question Input Validator", order = 100)]
     public class TrigQuestionInputValidator : TMP_InputValidator

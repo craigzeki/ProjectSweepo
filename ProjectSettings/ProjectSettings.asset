@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Zekmouse Inc
-  productName: ProjectSweepoConfigurator
+  productName: ProjectSweepo
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -134,10 +134,8 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.2
-  preloadedAssets:
-  - {fileID: -1455745608591294312, guid: 2bc501e736566ad4ea57c0648a3a97d1, type: 2}
-  - {fileID: 11400000, guid: 4d87b9a4ea753d04bacf0696e4183d26, type: 2}
+  bundleVersion: 0.11
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -157,7 +155,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.ZekmouseInc.ProjectSweepo
+    Android: com.ZekmouseInc.ProjectSweepoConfigurator
     Standalone: com.Zekmouse-Inc.ProjectSweepoConfigurator
   buildNumber:
     Standalone: 0
