@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class GeometryQuestionManager : QuestionManager
+public class GeometryQuestionManager : MonoBehaviour //QuestionManager
 {
 
     // SORT THESE FIELDS OUT LATER
-    //private Vector2Int startPoint;
-    //private Vector2Int currentOffset, currentPosition;
+    private bool gridIsActive = false;
+
+    public RectTransform startPoint, guessPoints, answerPoints;
+    [SerializeField] [HideInInspector] private List<Vector2Int> guesses;
+    [SerializeField] [HideInInspector] private List<RectTransform> guessPositions;
+
+    private Vector2Int startLocation;
+
+
     private byte questionsDone = 0, questionsAnswered = 0;
 
     public RectTransform moveablePoint;
@@ -71,16 +79,16 @@ public class GeometryQuestionManager : QuestionManager
 
         foreach (Vector2Int v in Locations)
         {
-            Debug.Log($"{ v.x } | { v.y }");
+            //Debug.Log($"{ v.x } | { v.y }");
             locationsToMoveTo.Add(v);
         }
 
-        foreach (Vector2Int v in locationsToMoveTo)
-        { Debug.Log($" { v.x } | { v.y }"); }
+        //foreach (Vector2Int v in locationsToMoveTo)
+        //{ Debug.Log($" { v.x } | { v.y }"); }
     }
 
-    public override void CheckAnswer()
-    {
+    //public override void CheckAnswer()
+    //{
         //if (VerifyAnswer(startPoint, locationsToMoveTo[(int)questionsDone], currentOffset))
         //{
            // questionsAnswered++;
@@ -89,21 +97,21 @@ public class GeometryQuestionManager : QuestionManager
         //questionsDone++;
 
         //startPoint = currentPosition;
-    }
+    //}
 
-    public override void NextQuestion()
-    {
-        #region EDIT AND RELOCATE THIS IN METHOD
+    //public override void NextQuestion()
+    //{
+        //#region EDIT AND RELOCATE THIS IN METHOD
         //questionsCompleted++;
 
         // if (questionsCompleted == questionsToComplete.Count)
         // { DoSomething() }
-        #endregion
+        //#endregion
 
-    }
+    //}
 
-    protected override void ResetQuestions()
-    { }
+    //protected override void ResetQuestions()
+    //{ }
 
     private bool VerifyAnswer(Vector2Int startPoint, Vector2Int target, Vector2Int offset)
     {
@@ -112,7 +120,10 @@ public class GeometryQuestionManager : QuestionManager
 
     public void Button_MovePoint(TransformDirection transformDirection)
     {
-        switch(transformDirection.direction.vertical)
+        if (!gridIsActive)
+        { return; }
+
+        switch (transformDirection.direction.vertical)
         {
             case TransformDirection.Vertical.Up:
                 currentPosition.y += 1;
@@ -153,15 +164,80 @@ public class GeometryQuestionManager : QuestionManager
         moveablePoint.localPosition = new Vector3((currentPosition.x - 5) * 0.05f, (currentPosition.y - 5) * 0.05f, 0f);
     }
 
-    public void Button_SubmitAnswer()
+    private void Button_SubmitAnswer()
     {
+        guesses.Add(currentPosition);
 
+        RectTransform newGuess = Instantiate(moveablePoint, moveablePoint.position, Quaternion.identity);
+        newGuess.SetParent(guessPoints);
+        guessPositions.Add(newGuess);
+
+        newGuess.gameObject.SetActive(false);
+
+        newGuess.gameObject.GetComponent<Image>().color = new Color(1f, 0.8f, 0f, 1f);
+
+        if (currentPosition == locationsToMoveTo[questionsDone])
+        { questionsAnswered++; }
+
+        questionsDone++;
+
+        if (questionsDone == numberOfQuestions)
+        {
+            Debug.Log("PINGAS");
+            gridIsActive = false;
+
+            foreach(RectTransform r in guessPositions)
+            { r.gameObject.SetActive(true); }
+
+            moveablePoint.gameObject.SetActive(false);
+            startPoint.gameObject.SetActive(false);
+        }
+    }
+
+    private void Button_ActivatePuzzle()
+    {
+        if (Application.isPlaying)
+        { gridIsActive = true; }
+        else { gridIsActive = false; }
+
+        currentPosition = startLocation;
+        moveablePoint.localPosition = new Vector3((currentPosition.x - 5) * 0.05f, (currentPosition.y - 5) * 0.05f, 0f);
+        moveablePoint.gameObject.SetActive(gridIsActive);
+
+        questionsDone = 0;
+        questionsAnswered = 0;
+
+        ValidateLocations();
+
+        for (int i = 0; i < numberOfQuestions; i++)
+        {
+            Debug.Log(locationsToMoveTo[i]);
+        }
+
+        Debug.Log("Pingas!");
+        
+        startLocation = new Vector2Int(Random.Range(0, 11), Random.Range(0, 11));
+        startPoint.localPosition = new Vector3((startLocation.x - 5) * 0.05f, (startLocation.y - 5) * 0.05f, 0f);
+        startPoint.gameObject.SetActive(true);
+    }
+
+    [ContextMenu("Press Big Button")]
+    public void Button_BigButton()
+    {
+        if (gridIsActive)
+        { Button_SubmitAnswer(); }
+        else { Button_ActivatePuzzle(); }
     }
 
     private void Awake()
     {
-        currentPosition = new Vector2Int(5, 5);
+        gridIsActive = false;
 
-        moveablePoint.localPosition = new Vector3((currentPosition.x - 5) * 0.1f, (currentPosition.y - 5) * 0.1f, 0f);
+        //currentPosition = new Vector2Int(5, 5);
+
+        //startLocation = new Vector2Int(Random.Range(0, 11), Random.Range(0, 11));
+        //startPoint.localPosition = new Vector3((startLocation.x - 5) * 0.05f, (startLocation.y - 5) * 0.05f, 0f);
+
+        //moveablePoint.localPosition = new Vector3((currentPosition.x - 5) * 0.1f, (currentPosition.y - 5) * 0.1f, 0f);
     }
 }
