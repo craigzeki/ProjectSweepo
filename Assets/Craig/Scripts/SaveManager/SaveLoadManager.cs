@@ -587,6 +587,7 @@ public class SaveLoadManager : MonoBehaviour
                         if (gameLoadData.TrigQuestionData[i].valid == false) continue;
                         GameObject go;
                         go = Instantiate(saveTypePrefabs[(int)saveType]);
+                        go.GetComponent<SaveableObject>().RegisterAsSaveable();
                         go.GetComponent<SaveableObject>().TryLoadData(gameLoadData.TrigQuestionData, i);
                     }
                     break;

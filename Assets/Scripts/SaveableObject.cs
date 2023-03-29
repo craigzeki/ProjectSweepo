@@ -18,7 +18,13 @@ public class SaveableObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(!SaveLoadManager.Instance.RegisterAsSaveable(saveType, this, out myHashIndex))
+        RegisterAsSaveable();
+    }
+
+    public bool RegisterAsSaveable()
+    {
+        if(registeredAsSaveable) return true;
+        if (!SaveLoadManager.Instance.RegisterAsSaveable(saveType, this, out myHashIndex))
         {
             Debug.Log("Error: RegisterAsSaveable() failed: SaveType = " + saveType.ToString(), this.gameObject);
         }
@@ -28,6 +34,7 @@ public class SaveableObject : MonoBehaviour
             Debug.Log(this.gameObject.name + " registered as saveable with SaveType = " + saveType + " : hash index is: " + myHashIndex.ToString(), this.gameObject);
 
         }
+        return registeredAsSaveable;
     }
 
     public bool TrySaveData(ref List<TrigQuestionData> questions)
