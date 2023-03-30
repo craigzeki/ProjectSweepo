@@ -15160,6 +15160,7 @@ GameObject:
   - component: {fileID: 719948759209189182}
   - component: {fileID: 7738921066644248782}
   - component: {fileID: 8168455734854371957}
+  - component: {fileID: 5688421809574060056}
   m_Layer: 0
   m_Name: SimpleGrab2PalmGrab
   m_TagString: Untagged
@@ -15278,6 +15279,19 @@ MonoBehaviour:
   _whenCancel:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &5688421809574060056
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6346890152374641002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.25063354, y: 0.35856867, z: 0.21718465}
+  m_Center: {x: -0.017331675, y: 0.042609513, z: 0.0111432895}
 --- !u!1 &6465316328640877674
 GameObject:
   m_ObjectHideFlags: 0
@@ -15730,6 +15744,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5451608222516653226}
     m_Modifications:
+    - target: {fileID: 234194673084172208, guid: f7c05685b2b7f7c4b9ee4085755793cc, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5043214455410893912, guid: f7c05685b2b7f7c4b9ee4085755793cc, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -15790,7 +15808,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: plant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8941919173513433479, guid: f7c05685b2b7f7c4b9ee4085755793cc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f7c05685b2b7f7c4b9ee4085755793cc, type: 3}
 --- !u!4 &5528685831823692365 stripped
 Transform:
