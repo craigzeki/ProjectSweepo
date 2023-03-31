@@ -18,15 +18,15 @@ public class ReceptacleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        sumTxtB.text = ((uint)sumB).ToString();
+        sumTxtR.text = ((uint)sumR).ToString();
+        sumTxtY.text = ((uint)sumY).ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        sumTxtB.text = ((uint)sumB).ToString();
-        sumTxtR.text = ((uint)sumR).ToString();
-        sumTxtY.text = ((uint)sumY).ToString();
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -34,17 +34,18 @@ public class ReceptacleManager : MonoBehaviour
         if (collision.gameObject.tag == "blueplant")
         {
             sumB++;
-            Debug.Log("Collision detected");
+            //Debug.Log("Collision detected");
         }
         if (collision.gameObject.tag == "redplant")
         {
-            sumR++; Debug.Log("Collision detected");
+            sumR++;
+            //Debug.Log("Collision detected");
 
         }
         if (collision.gameObject.tag == "yellowplant")
         {
             sumY++;
-            Debug.Log("Collision detected");
+            //Debug.Log("Collision detected");
 
         }
         else return;
