@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Craig/Scenes/ProjectSweepoConfigurator.unity
-    guid: 379aa3984625ea8409d8eddbc66a1cec
+    path: Assets/Craig/Scenes/ProjectSweepo_All.unity
+    guid: 677e4f62de6e9e142a995da852de7ce3
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 4d87b9a4ea753d04bacf0696e4183d26, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2bc501e736566ad4ea57c0648a3a97d1, type: 2}
