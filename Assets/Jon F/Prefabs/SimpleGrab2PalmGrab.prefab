@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 44221996825093487}
   - component: {fileID: 44221996825093481}
   - component: {fileID: 44221996825093480}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HandGrabInteractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 4822006590371822829}
   - component: {fileID: 7570021126306982534}
   - component: {fileID: 831419850319537249}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: torchParticleFlames
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4992,7 +4992,7 @@ GameObject:
   - component: {fileID: 8454222754854367017}
   - component: {fileID: 409912523346252133}
   - component: {fileID: 44221995746466135}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: simpleGrabTorchMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5117,7 +5117,7 @@ GameObject:
   - component: {fileID: 790620045685991295}
   - component: {fileID: 1712333520805126948}
   - component: {fileID: 6885056553658621630}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HandGrabInteractable_mirror
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5250,7 +5250,7 @@ GameObject:
   - component: {fileID: 5717335359785607306}
   - component: {fileID: 5121891516012300289}
   - component: {fileID: 3949188569238097964}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: torchParticleBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10074,7 +10074,7 @@ GameObject:
   - component: {fileID: 4964159547701578265}
   - component: {fileID: 1067755958321482187}
   - component: {fileID: 3494946469394869084}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HandGrab Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10160,7 +10160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5451608222516653226}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10196,7 +10196,7 @@ GameObject:
   - component: {fileID: 5076657387544289860}
   - component: {fileID: 3365374046462039437}
   - component: {fileID: 6464274877907957035}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: torchParticleSparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15036,7 +15036,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6817884597294697266}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15071,7 +15071,7 @@ GameObject:
   - component: {fileID: 661407976945793612}
   - component: {fileID: 2476679810536275575}
   - component: {fileID: 5845497118020123910}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HandGrab Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15161,7 +15161,7 @@ GameObject:
   - component: {fileID: 7738921066644248782}
   - component: {fileID: 8168455734854371957}
   - component: {fileID: 5688421809574060056}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SimpleGrab2PalmGrab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15304,7 +15304,7 @@ GameObject:
   - component: {fileID: 5232840767077434708}
   - component: {fileID: 7263851981926962263}
   - component: {fileID: 44221995382867879}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15495,7 +15495,7 @@ GameObject:
   - component: {fileID: 3200006319367684234}
   - component: {fileID: 4610992387198265196}
   - component: {fileID: 5923434728062310791}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HandGrab Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15583,7 +15583,7 @@ GameObject:
   - component: {fileID: 5788265171439399355}
   - component: {fileID: 5016205755118281680}
   - component: {fileID: 409985082460679101}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HandGrab Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15719,6 +15719,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicGrabPickupAudio
       objectReference: {fileID: 0}
+    - target: {fileID: 4674537905600659506, guid: b47fbfedcfef5414580d99c9115e2b8a, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b47fbfedcfef5414580d99c9115e2b8a, type: 3}
 --- !u!4 &4809091065023099793 stripped
@@ -15808,6 +15812,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: plant
       objectReference: {fileID: 0}
+    - target: {fileID: 5671941229149028066, guid: f7c05685b2b7f7c4b9ee4085755793cc, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8941919173513433479, guid: f7c05685b2b7f7c4b9ee4085755793cc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f7c05685b2b7f7c4b9ee4085755793cc, type: 3}
@@ -15874,6 +15882,10 @@ PrefabInstance:
     - target: {fileID: 4674537905600659506, guid: 4c10bc37c0e8b774387330f749138159, type: 3}
       propertyPath: m_Name
       value: BasicGrabReleaseAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 4674537905600659506, guid: 4c10bc37c0e8b774387330f749138159, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c10bc37c0e8b774387330f749138159, type: 3}

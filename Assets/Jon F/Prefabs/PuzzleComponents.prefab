@@ -288,6 +288,10 @@ PrefabInstance:
       propertyPath: sumTxtY
       value: 
       objectReference: {fileID: 8427170363043146015}
+    - target: {fileID: 3992267051509983473, guid: 3277f8518d9d3384cbc2d38a0e7fb011, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3999607960383550373, guid: 3277f8518d9d3384cbc2d38a0e7fb011, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Desk_End_01
@@ -343,6 +347,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4004799213600352009, guid: 3277f8518d9d3384cbc2d38a0e7fb011, type: 3}
   m_PrefabInstance: {fileID: 7662988928699117791}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6762456017891541882 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3999607960383550373, guid: 3277f8518d9d3384cbc2d38a0e7fb011, type: 3}
+  m_PrefabInstance: {fileID: 7662988928699117791}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7662988929701372614
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6762456017891541882}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.41412368, y: 0.722016, z: 0.91659576}
+  m_Center: {x: 0.031024177, y: 0.361008, z: 0}
 --- !u!1001 &7662988928944593911
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -599,7 +621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8150297428241448562, guid: d429d297aff97d84ea31cfa5cde91e3d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8150297428241448562, guid: d429d297aff97d84ea31cfa5cde91e3d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -607,7 +629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8150297428241448562, guid: d429d297aff97d84ea31cfa5cde91e3d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.001
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 8544144768347882241, guid: d429d297aff97d84ea31cfa5cde91e3d, type: 3}
       propertyPath: m_TagString
